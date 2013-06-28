@@ -49,6 +49,15 @@
 						<form class="form-horizontal">
 							<fieldset>
 								<legend>Create New Class</legend>
+								
+								<div class="control-group">
+									<label class="control-label" for="inputRoster">Roster File</label>
+									<div class="controls">
+										<input type="file" id="inputRoster"> 
+<!-- 										<button id="readfilebutton" class="btn btn-success">Load</button>										 -->
+									</div>
+								</div>									
+								
 								<div class="control-group">
 									<label class="control-label" for="inputYear">Year</label>
 									<div class="controls">
@@ -88,11 +97,32 @@
 											<option value="science">Science</option>
 											<option value="snack">Snack</option>
 										</select>
-										<button id="createbutton" class="btn btn-success">Create</button>												
+										<button id="createbutton" class="btn btn-success" disabled="disabled">Create</button>												
 									</div>
-								</div>								
+								</div>
+								
+																
 							</fieldset>
 						</form>
+						
+						
+						<table class="table" id="studenttable">
+							<thead>
+								<tr>
+									<th>Student ID</th>
+									<th>First Name</th>
+									<th>Last name</th>
+									<th>Username</th>
+									<th>Password</th>
+									<th>Email</th>
+									<th>Class</th>
+								</tr>
+							</thead>
+							<tbody>
+							
+							</tbody>
+						</table>
+												
 					</div>
 
 					<div id="class-delete">
@@ -112,20 +142,16 @@
 
 
 					<div id="student-add">
-
 						<form class="form-horizontal">
 							<fieldset>
 								<legend>Add Students</legend>
 								
-<!-- 								<div class="control-group"> -->
-<!-- 									<label class="control-label" for="inputRoster">Roster File</label> -->
-<!-- 									<div class="controls"> -->
-<!-- 										<input type="file" id="inputRoster"> <br /> -->
-<!-- 									</div> -->
-<!-- 								</div>								 -->
+							
 
 							</fieldset>
 						</form>
+
+						
 					</div>
 
 				</div>

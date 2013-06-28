@@ -3,6 +3,7 @@ oh.utils = oh.utils || {};
 oh.user = oh.user || {};
 oh.class = oh.class || {};
 oh.campaign = oh.campaign || {};
+oh.document = oh.document || {};
 
 oh.utils.delayexec = function(){
 	var timer;
@@ -199,6 +200,18 @@ oh.user.info = function(cb){
 	});
 }
 
+oh.user.setup = function(first_name, last_name, organization, personal_id, cb){
+	oh.call("/user/setup", {
+		first_name : first_name,
+		last_name : last_name,
+		organization : organization,
+		personal_id : personal_id
+	}, function(res){
+		if(!cb) return;
+		cb(res.data)
+	});
+}
+
 oh.class.create = function(class_urn, cb){
 	var req = oh.call("/class/create", {
 		class_urn : class_urn,
@@ -213,6 +226,17 @@ oh.class.create = function(class_urn, cb){
 oh.class.delete = function(class_urn, cb){
 	var req = oh.call("/class/delete", {
 		class_urn : class_urn
+	}, function(res){
+		if(!cb) return;
+		cb()
+	});
+	return req;	
+}
+
+oh.class.update = function(class_urn, user_role_list_add, cb){
+	var req = oh.call("/class/update", {
+		class_urn : class_urn,
+		user_role_list_add : user_role_list_add
 	}, function(res){
 		if(!cb) return;
 		cb()
@@ -237,6 +261,18 @@ oh.campaign.create = function(xml, campaign_urn, class_urn, cb){
 oh.campaign.delete = function(campaign_urn, cb){
 	var req = oh.call("/campaign/delete", {
 		campaign_urn : campaign_urn,		
+	}, function(res){
+		if(!cb) return;
+		cb()
+	});
+	return req;	
+}
+
+oh.document.create = function(document_name, privacy_state, document, cb){
+	var req = oh.call("/document/create", {
+		document_name : document_name,
+		privacy_state : privacy_state,
+		document : document
 	}, function(res){
 		if(!cb) return;
 		cb()

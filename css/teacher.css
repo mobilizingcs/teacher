@@ -21,3 +21,11 @@ html,body {
   margin: 20px 0;
 }
 
+select, #inputRoster {
+	width: 250px;
+}
+
+button {
+	width: 80px;
+	margin-left: 20px;
+}
