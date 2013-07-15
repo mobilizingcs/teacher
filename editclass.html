@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Teacher Class Tool</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+
+<script src="js/jquery.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/d3.v3.min.js"></script>
+<script src="js/underscore.js"></script>
+<script src="js/ohmage.js"></script>
+
+<script src="editclass.js"></script>
+
+<style>
+#class-select {
+	margin-bottom: 120px;
+}
+
+select, #inputRoster {
+	width: 240px;
+}
+
+button {
+	width: 140px;
+	margin-left: 20px;
+}
+</style>
+
+</head>
+<body>
+
+	<!-- Part 1: Wrap all page content here -->
+	<div id="wrap">
+
+		<!-- Begin page content -->
+		<div class="container">
+
+			<div class="page-header">
+				<h1>Teacher Class Tool</h1>
+			</div>
+
+			<div class="row">
+				<div class="span3">
+					<div>
+						<h3>Step 2</h3>
+						
+						<p><i>Add and remove students from the class.</i></p>
+					</div>
+				</div>
+				<!--/span-->
+				<div class="span8 offset1">
+				
+					<h3 id="urntitle"></h3>
+					
+					<table class="table table-striped table-hover" id="studentable">
+						<thead>
+							<tr>
+								<th>Student ID</th>
+								<th>Name</th>
+								<th>username</th>
+								<th>password</th>
+								<th>role</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>							
+						</tbody>
+					</table>					
+				
+					<div>
+						<form class="form-horizontal">
+							<fieldset>
+								<legend>Upload Roster</legend>
+								<div class="control-group">
+									<div class="controls">
+										<input type="file" id="inputRoster">
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

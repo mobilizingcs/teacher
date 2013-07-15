@@ -135,20 +135,25 @@ oh.call = function(path, data, datafun){
 			withCredentials: true
 		}
 	}).done(function(rsptxt) {
-		if(!rsptxt || rsptxt == ""){
-			alert("Undefined error.")
-			return false;
+		//in case of json
+		if(myrequest.getResponseHeader("content-type") == "application/json"){
+			if(!rsptxt || rsptxt == ""){
+				alert("Undefined error.")
+				return false;
+			}			
+			var response = jQuery.parseJSON(rsptxt);
+			if(response.result == "success"){
+				if(datafun) datafun(response)
+			} else if(response.result == "failure") {
+				processError(response.errors)
+				return false;
+			} else{
+				alert("JSON response did not contain result attribute.")
+			}
+		//anything else
+		} else {
+			datafun(rsptxt);
 		}
-		var response = jQuery.parseJSON(rsptxt);
-		if(response.result == "success"){
-			if(datafun) datafun(response)
-		} else if(response.result == "failure") {
-			processError(response.errors)
-			return false;
-		} else{
-			alert("JSON response did not contain result attribute.")
-		}
-		
 	}).error(function(){alert("Ohmage returned an undefined error.")});		
 	
 	return(myrequest)
@@ -201,7 +206,7 @@ oh.user.info = function(cb){
 }
 
 oh.user.setup = function(first_name, last_name, organization, personal_id, cb){
-	oh.call("/user/setup", {
+	return oh.call("/user/setup", {
 		first_name : first_name,
 		last_name : last_name,
 		organization : organization,
@@ -212,10 +217,19 @@ oh.user.setup = function(first_name, last_name, organization, personal_id, cb){
 	});
 }
 
+oh.class.read = function(class_urn, cb){
+	var req = oh.call("/class/read", {
+		 class_urn_list : class_urn
+	}, function(res){
+		cb && cb(res.data);
+	});
+	return req;	
+}
+
 oh.class.create = function(class_urn, cb){
 	var req = oh.call("/class/create", {
 		class_urn : class_urn,
-		class_name : class_urn
+		class_name : class_urn.replace("urn:class:teacher", "").replace(/:/g, " ")
 	}, function(res){
 		if(!cb) return;
 		cb()
@@ -234,14 +248,21 @@ oh.class.delete = function(class_urn, cb){
 }
 
 oh.class.update = function(class_urn, user_role_list_add, cb){
-	var req = oh.call("/class/update", {
+	return oh.call("/class/update", {
 		class_urn : class_urn,
 		user_role_list_add : user_role_list_add
 	}, function(res){
 		if(!cb) return;
 		cb()
 	});
-	return req;	
+}
+
+oh.class.search = function(filter, cb){
+	return oh.call("/class/search", {
+		class_urn : filter
+	}, function(res){
+		cb && cb(Object.keys(res.data));
+	});
 }
 
 oh.campaign.create = function(xml, campaign_urn, class_urn, cb){
@@ -268,16 +289,32 @@ oh.campaign.delete = function(campaign_urn, cb){
 	return req;	
 }
 
-oh.document.create = function(document_name, privacy_state, document, cb){
-	var req = oh.call("/document/create", {
+oh.document.create = function(document_name, document, class_urn, cb){
+	return oh.call("/document/create", {
 		document_name : document_name,
-		privacy_state : privacy_state,
+		privacy_state : "private",
+		document_class_role_list : class_urn + ";reader",
 		document : document
 	}, function(res){
 		if(!cb) return;
-		cb()
+		cb(res["document_id"])
 	});
-	return req;	
+}
+
+oh.document.search = function(filter, cb){
+	return oh.call("/document/read", {
+		document_name_search : filter
+	}, function(res){
+		cb && cb(res.data)
+	});
+}
+
+oh.document.contents = function(document_id, cb){
+	return oh.call("/document/read/contents", {
+		document_id : document_id
+	}, function(res){
+		cb && cb(res)
+	});
 }
 
 //no more than 1 ping every 60 sec

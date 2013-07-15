@@ -30,10 +30,22 @@ $(function(){
 	
 	function populateclasses(){
 		$("#inputClass").empty();
+		$("#classtable tbody").empty();
 		oh.user.info(function(res){
 			var userdata = res.data[first(res.data)];
 			$.each(userdata.classes, function(key, value){
-				$("#inputClass").append($("<option/>", {value: key, text:value}));
+				if(key.substr(0,17) == "urn:class:teacher"){
+					$("#inputClass").append($("<option/>", {value: key, text:value}));
+					var mytr = $("<tr />").appendTo("#classtable tbody");
+					td(value).appendTo(mytr);
+					td(key).appendTo(mytr);
+					
+					var mybtn = $('<a class="btn btn-primary">').on("click", function(){
+						alert(key);
+					}).text("Select")
+					
+					$("<td>").append(mybtn).appendTo(mytr);
+				}
 			});
 		});
 			
@@ -43,19 +55,48 @@ $(function(){
 	}
 	
 	function createaccounts(accountlist, class_urn){
+		var requests = [];
 		$.each(accountlist, function(i, rec){
-			oh.user.setup(rec.firstname, rec.lastname, "test_org", rec.id, function(data){
+			requests.push(oh.user.setup(rec.firstname, rec.lastname, "LAUSD", rec.id, function(data){
 				rec.username = data.username;
 				rec.password = data.password;
 				rec.email = data["email_address"];
 				rec.tr.append(td(rec.username));
 				rec.tr.append(td(rec.password));
-				rec.tr.append(td(rec.email));
 				oh.class.update(class_urn, rec.username + ";" + "restricted", function(){
 					rec.tr.append(td("OK"));					
-				})
-			})
-		})		
+				});
+			}));
+		});
+		
+		$.when.apply($, requests).done(function() {
+			savedoc(class_urn);
+		});		
+		
+	}
+	
+	function savedoc(class_urn){
+		var classdb = $.map( classrecords, function(val, i) {
+			return {
+				"Student ID" : val["Student ID"],
+				"Student Name" : val["Student Name"],
+				"username" : val["username"],
+				"password" : val["password"],
+				
+			}
+		});	
+		
+		classdb.sort(function (a, b) {
+			if (a["Student ID"] > b["Student ID"])
+				return 1;
+		    if (a["Student ID"] < b["Student ID"])
+		    	return -1;
+		    return 0;
+		  });
+		
+		oh.document.create(class_urn + "_students.csv", d3.csv.format(classdb), class_urn, function(){
+			alert("Document created!")
+		});
 	}
 	
 	
@@ -72,7 +113,7 @@ $(function(){
 			oh.class.create(class_urn, function(){			
 				oh.campaign.create(myxml, campaign_urn, class_urn, function(){
 					populateclasses();
-					createaccounts(classrecords, class_urn);
+					//createaccounts(classrecords, class_urn);
 				});
 			});			
 		});		
