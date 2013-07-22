@@ -45,17 +45,13 @@ $(function(){
 					rec.username = data.username;
 					rec.password = data.password;
 					requests2.push(oh.class.adduser(class_urn, data.username + ";" + "restricted", function(){
-						console.log("Added user " + data.username);			
+						//console.log("Added user " + data.username);			
 					}));
 				}));
 			} else {
 				currentstudents.splice(index, 1);
 			}
 		});
-		
-		if(currentstudents.length > 0){
-			alert("The following users are in the class but not present in the latest roster:\n\n" + currentstudents.toString());
-		}
 		
 		$.when.apply($, requests1).done(function() {
 			$.when.apply($, requests2).done(function() {
@@ -64,9 +60,17 @@ $(function(){
 					loadtable(currentstudents);
 				});
 				
+				//show alerts
+				if(currentstudents.length > 0){
+					$("#deletealart").show();
+				} 
+				
+				//report added students
+				$("#usercount").text(requests2.length)
+				$("#donealert").show();			
+				
 				//save the doc
 				savedoc(classrecords);	
-				console.log("all done.")
 			});		
 		});		
 		
@@ -106,7 +110,7 @@ $(function(){
 	function addrow(userdata, isdropped){
 		var mytr = $("<tr />").appendTo("#studentable tbody");
 		if(isdropped){
-			mytr.addClass("error")
+			mytr.addClass("info")
 		}
 		td(userdata["personal_id"]).appendTo(mytr);
 		td(userdata["first_name"]).appendTo(mytr);

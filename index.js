@@ -2,9 +2,9 @@ $(function(){
 	
 	//these should correspond to name.xml files in the xml dir 
 	var subjectcampaigns = {
-		"science" : ["science"],
-		"math" : ["math"],
-		"ecs" : ["snack", "media"]
+		"science" : ["Science_OneDayTrash", "Science_TrashType"],
+		"math" : ["Math_Nutrition"],
+		"ecs" : ["ECS_Media", "ECS_Snack"]
 	};
 	
 	//will be set automatically from login

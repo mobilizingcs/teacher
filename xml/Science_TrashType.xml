@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <campaign>
-  <campaignName>Trash</campaignName>
+  <campaignName>TrashType</campaignName>
 
   <surveys>
     <survey>
-      <id>trashSurvey1</id>
+      <id>trashSurvey2</id>
       <title>Trash Survey</title>
-      <description>Collect images of trashes that you throw away.</description>
+      <description>Collect information about trashes that you throw away.</description>
       <submitText>Thank you for submitting a trash survey!</submitText>
       <anytime>true</anytime>
 
       <contentList>
-	
+
         <prompt>
           <id>trashName</id>
           <displayLabel>Trash Name</displayLabel>
@@ -32,6 +32,31 @@
           <skippable>false</skippable>
           <skipLabel>Skip</skipLabel>
         </prompt>
+	
+        <prompt>
+          <id>trashType</id>
+          <displayLabel>Trash Type</displayLabel>
+          <promptText>What is the type of this trash?</promptText>
+          <abbreviatedText>Single Choice</abbreviatedText>
+          <promptType>single_choice</promptType>
+          <properties>
+            <property>
+              <key>0</key>
+              <label>Composable</label>
+            </property>
+            <property>
+              <key>1</key>
+              <label>Recyclable</label>
+            </property>
+            <property>
+              <key>2</key>
+              <label>Landfill</label>
+            </property>
+          </properties>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
 
         <prompt>
           <id>trashPhoto</id>
@@ -51,6 +76,7 @@
 
       </contentList>
    </survey>
+
 
   </surveys>
 </campaign>
