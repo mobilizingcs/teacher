@@ -205,6 +205,14 @@ oh.user.info = function(cb){
 	});
 }
 
+oh.user.read = function(username, cb){
+	return oh.call("/user/read",{
+		user_list : username
+	}, function(res){
+		cb && cb(res.data)
+	});
+}
+
 oh.user.setup = function(first_name, last_name, organization, personal_id, cb){
 	return oh.call("/user/setup", {
 		first_name : first_name,
@@ -247,14 +255,22 @@ oh.class.delete = function(class_urn, cb){
 	return req;	
 }
 
-oh.class.update = function(class_urn, user_role_list_add, cb){
+oh.class.adduser = function(class_urn, username, cb){
 	return oh.call("/class/update", {
 		class_urn : class_urn,
-		user_role_list_add : user_role_list_add
+		user_role_list_add : username
 	}, function(res){
-		if(!cb) return;
-		cb()
+		cb && cb();
 	});
+}
+
+oh.class.removeuser = function(class_urn, username, cb){
+	return oh.call("/class/update", {
+		class_urn : class_urn,
+		user_list_remove : username
+	}, function(res){
+		cb && cb();
+	});	
 }
 
 oh.class.search = function(filter, cb){

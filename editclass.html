@@ -4,11 +4,13 @@
 <title>Teacher Class Tool</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/bootstrap-sortable.css" rel="stylesheet" media="screen">
 
 
 <script src="js/jquery.js"></script>
 <script src="js/jquery.cookie.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-sortable.js"></script>
 <script src="js/d3.v3.min.js"></script>
 <script src="js/underscore.js"></script>
 <script src="js/ohmage.js"></script>
@@ -24,10 +26,7 @@ select, #inputRoster {
 	width: 240px;
 }
 
-button {
-	width: 140px;
-	margin-left: 20px;
-}
+
 </style>
 
 </head>
@@ -52,24 +51,7 @@ button {
 					</div>
 				</div>
 				<!--/span-->
-				<div class="span8 offset1">
-				
-					<h3 id="urntitle"></h3>
-					
-					<table class="table table-striped table-hover" id="studentable">
-						<thead>
-							<tr>
-								<th>Student ID</th>
-								<th>Name</th>
-								<th>username</th>
-								<th>password</th>
-								<th>role</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>							
-						</tbody>
-					</table>					
+				<div class="span9">
 				
 					<div>
 						<form class="form-horizontal">
@@ -83,6 +65,27 @@ button {
 							</fieldset>
 						</form>
 					</div>
+					
+					<h3 id="urntitle"></h3>
+					
+					<table class="table table-striped table-hover sortable" id="studentable">
+						<thead>
+							<tr>
+								<th>Student ID</th>
+								<th>First</th>
+								<th>Last</th>
+								<th>username</th>
+								<th>role</th>
+								<th>password</th>	
+								<td> </td>
+								<td> </td>																								
+							</tr>
+						</thead>
+						<tbody>
+							<tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>							
+						</tbody>
+					</table>	
+										
 				</div>
 			</div>
 		</div>

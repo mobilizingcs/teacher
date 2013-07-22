@@ -1,7 +1,8 @@
 $(function(){
 	
 	var class_urn; 
-	var class_doc;
+	var class_members;
+	var teacherlogin;
 	
 	function n2(n){
 	    return n > 9 ? "" + n: "0" + n;
@@ -13,7 +14,7 @@ $(function(){
 	}
 	
 	function td(x){
-		return($("<td>").text(x));
+		return($("<td>").text(x).attr("data-value", x || 0));
 	}	
 	
 	function first(obj) {
@@ -32,23 +33,40 @@ $(function(){
 		filereader.readAsText(target.files[0]);
 	}	
 	
-	function createaccounts(accountlist){
+	function createaccounts(classrecords){
+		var currentstudents = $.map(class_members, function(rec){return rec["personal_id"]});
 		var requests1 = [];
 		var requests2 = [];
-		$.each(accountlist, function(i, rec){
-			requests1.push(oh.user.setup(rec.firstname, rec.lastname, "LAUSD", rec.id, function(data){
-				rec.username = data.username;
-				rec.password = data.password;
-				requests2.push(oh.class.update(class_urn, data.username + ";" + "restricted", function(){
-					console.log("Added user " + data.username);			
+		$.each(classrecords, function(i, rec){
+			//add new students
+			var index = currentstudents.indexOf(rec.id);
+			if(index < 0){
+				requests1.push(oh.user.setup(rec.firstname, rec.lastname, "LAUSD", rec.id, function(data){
+					rec.username = data.username;
+					rec.password = data.password;
+					requests2.push(oh.class.adduser(class_urn, data.username + ";" + "restricted", function(){
+						console.log("Added user " + data.username);			
+					}));
 				}));
-			}));
+			} else {
+				currentstudents.splice(index, 1);
+			}
 		});
+		
+		if(currentstudents.length > 0){
+			alert("The following users are in the class but not present in the latest roster:\n\n" + currentstudents.toString());
+		}
 		
 		$.when.apply($, requests1).done(function() {
 			$.when.apply($, requests2).done(function() {
+				//populate the html table
+				updatemembers(function(){
+					loadtable(currentstudents);
+				});
+				
+				//save the doc
+				savedoc(classrecords);	
 				console.log("all done.")
-				savedoc(accountlist);
 			});		
 		});		
 		
@@ -73,11 +91,9 @@ $(function(){
 		    return 0;
 		  });
 		
+		//save the doc		
 		var doctitle = class_urn + "_" + now() + "_students.csv"
-		oh.document.create(doctitle, d3.csv.format(classdb), class_urn, function(){
-			console.log("Document created!");
-			finddocs();
-		});
+		oh.document.create(doctitle, d3.csv.format(classdb), class_urn);
 	}	
 	
 	function getParameterByName(name) {
@@ -87,54 +103,68 @@ $(function(){
 	    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}	
 	
-	//finds all docs for the current 
-	function finddocs(){
-		oh.document.search(class_urn, function(results){
-			var requests = [];
-			var data = [];
-			$.each(results, function(id, obj){
-				var docname = obj.name;
-				var docdate = obj.last_modified;
-				var docid = id;
-				requests.push(oh.document.contents(id, function(x){
-					data.push(x);
-				}));				
+	function addrow(userdata, isdropped){
+		var mytr = $("<tr />").appendTo("#studentable tbody");
+		if(isdropped){
+			mytr.addClass("error")
+		}
+		td(userdata["personal_id"]).appendTo(mytr);
+		td(userdata["first_name"]).appendTo(mytr);
+		td(userdata["last_name"]).appendTo(mytr);
+		td(userdata["username"]).appendTo(mytr);
+		td(userdata["role"]).appendTo(mytr);
+		
+		//password field
+		var pwfield = td("");
+		pwfield.appendTo(mytr);
+		if(userdata["first_name"] && userdata["last_name"] && userdata["personal_id"]){
+			oh.user.setup(userdata["first_name"], userdata["last_name"], "LAUSD", userdata["personal_id"], function(data){
+				pwfield.text(data.password).attr("data-value", data.password);
 			});
-			$.when.apply($, requests).done(function() {
-				loadtable(data);
-			});				
-		});
+		} else {
+			pwfield.text("");
+		}
+		if(teacherlogin != userdata["username"]){
+			var delbutn = $('<button class="btn btn-danger btn-small"> Remove </button>').on("click", function(){
+				oh.class.removeuser(class_urn, userdata["username"], function(){
+					mytr.fadeOut();
+				})
+			})
+			$("<td>").append(delbutn).appendTo(mytr);
+			
+			var resetbtn = $('<button class="btn btn-warning btn-small"> Reset </button>').on("click", function(){
+				alert("Placeholder for resetting " + userdata["username"])
+			})
+			$("<td>").append(resetbtn).appendTo(mytr);		
+		} else {
+			td("").appendTo(mytr);
+			td("").appendTo(mytr);
+		}
+		
+		//for later reference
+		userdata.tablerow = mytr;
 	}
 	
-	function loadtable(data){
-		var students = {};		
-		$.each(data, function(i, dataset){
-			var records = d3.csv.parse(dataset);
-			$.each(records, function(j, rec){
-				//this way we filter duplicates
-				students[rec["username"]] = rec;
-			})
-		});
-		oh.class.read(class_urn, function(classdata){
-			$.each(classdata[class_urn].users, function(username, role){
-				students[username] = students[username] || {};
-				students[username].role = role;
-			});
-			populate(students)
+	function updatemembers(cb){
+		oh.class.read(class_urn, function(classlist){
+			oh.user.read(Object.keys(classlist[class_urn].users).toString(), function(userlist){
+				$.each(userlist, function(id, rec){
+					rec.role = classlist[class_urn].users[id];
+					rec.username = id;
+				});
+				class_members = userlist;
+				cb && cb();				
+			});			
 		});		
 	}
 	
-	function populate(students){
+	function loadtable(droppedstudents){
 		$("#studentable tbody").empty();
-		$.each(students, function(username, rec){
-			var mytr = $("<tr />").appendTo("#studentable tbody");
-			td(rec["Student ID"]).appendTo(mytr);
-			td(rec["Student Name"]).appendTo(mytr);
-			td(username).appendTo(mytr);
-			td(rec["password"]).appendTo(mytr);
-			td(rec["role"] || "dropped").appendTo(mytr);
+		$.each(class_members, function(username, userdata){
+			var isdropped = droppedstudents && (droppedstudents.indexOf(userdata["personal_id"]) > -1);
+			addrow(userdata, isdropped)
 		});
-	}
+	}		
 	
 	//init page
 	class_urn= getParameterByName("class");
@@ -146,9 +176,10 @@ $(function(){
 	
 	oh.ping(function(){
 		oh.user.whoami(function(x){
+			teacherlogin = x;
 			var teachervec1 = x.split("-");
 			var teachervec2 = teachervec1[teachervec1.length-1].split(".");
-			teachername = teachervec2[teachervec2.length-1];
+			var teachername = teachervec2[teachervec2.length-1];
 
 		});
 		
@@ -158,11 +189,10 @@ $(function(){
 				alert("Class: " + class_urn + " does not belong to current user.");
 				window.location = "index.html";
 			} else {
-				finddocs();
+				updatemembers(loadtable);
 			}
 		});
 			
-		
 		oh.keepalive();
 	});
 	
