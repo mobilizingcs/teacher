@@ -121,14 +121,13 @@ $(function(){
 		//password field
 		var pwfield = td("");
 		pwfield.appendTo(mytr);
+		
+		//these are student accounts
 		if(userdata["first_name"] && userdata["last_name"] && userdata["personal_id"]){
 			oh.user.setup(userdata["first_name"], userdata["last_name"], "LAUSD", userdata["personal_id"], function(data){
 				pwfield.text(data.password).attr("data-value", data.password);
 			});
-		} else {
-			pwfield.text("");
-		}
-		if(teacherlogin != userdata["username"]){
+			
 			var delbtn = $('<button class="btn btn-danger btn-small"> Remove </button>').on("click", function(){
 				delbtn.attr("disabled", "disabled")
 				oh.class.removeuser(class_urn, userdata["username"], function(){
@@ -140,10 +139,12 @@ $(function(){
 			var resetbtn = $('<button class="btn btn-warning btn-small"> Reset </button>').on("click", function(){
 				alert("Placeholder for resetting " + userdata["username"])
 			})
-			$("<td>").append(resetbtn).appendTo(mytr);		
+			$("<td>").append(resetbtn).appendTo(mytr);					
 		} else {
+			//these are non-student accounts.
+			pwfield.text("");
 			td("").appendTo(mytr);
-			td("").appendTo(mytr);
+			td("").appendTo(mytr);			
 		}
 		
 		//for later reference
