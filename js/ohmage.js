@@ -234,10 +234,10 @@ oh.class.read = function(class_urn, cb){
 	return req;	
 }
 
-oh.class.create = function(class_urn, cb){
+oh.class.create = function(class_urn, class_name, cb){
 	var req = oh.call("/class/create", {
 		class_urn : class_urn,
-		class_name : class_urn.replace("urn:class:teacher", "").replace(/:/g, " ")
+		class_name : class_name
 	}, function(res){
 		if(!cb) return;
 		cb()
@@ -281,12 +281,13 @@ oh.class.search = function(filter, cb){
 	});
 }
 
-oh.campaign.create = function(xml, campaign_urn, class_urn, cb){
+oh.campaign.create = function(xml, campaign_urn, description, class_urn, cb){
 	var req = oh.call("/campaign/create", {
 		xml : xml,
 		privacy_state : "shared",
 		running_state : "running",
 		campaign_urn : campaign_urn,	
+		description : description,
 		class_urn_list : class_urn		
 	}, function(res){
 		if(!cb) return;

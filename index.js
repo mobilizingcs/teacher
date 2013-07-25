@@ -2,9 +2,9 @@ $(function(){
 	
 	//these should correspond to name.xml files in the xml dir 
 	var subjectcampaigns = {
-		"science" : ["Science_OneDayTrash", "Science_TrashType"],
-		"math" : ["Math_Nutrition"],
-		"ecs" : ["ECS_Media", "ECS_Snack"]
+		"science" : ["OneDayTrash", "TrashType"],
+		"math" : ["Nutrition"],
+		"ecs" : ["Media", "Snack"]
 	};
 	
 	//will be set automatically from login
@@ -30,7 +30,7 @@ $(function(){
 		oh.user.info(function(res){
 			var userdata = res.data[first(res.data)];
 			$.each(userdata.classes, function(key, value){
-				if(key.substr(0,17) == "urn:class:teacher"){
+				if(key.substr(0,15) == "urn:class:lausd"){
 					$("#inputClass").append($("<option/>", {value: key, text:value}));
 					var mytr = $("<tr />").appendTo("#classtable tbody");
 					td(value).appendTo(mytr);
@@ -51,11 +51,13 @@ $(function(){
 			
 	$("#createbutton").on("click", function createclass(e){
 		e.preventDefault();
-		var year = $("#inputYear").val().toLowerCase();
-		var subject = $("#inputSubject").val().toLowerCase();
-		var period = $("#inputPeriod").val().toLowerCase();
-		var classname = (subject + ":" + year + ":"  + period + ":" + teachername).toLowerCase();
-		var class_urn = "urn:class:teacher:" + classname;
+		var school = $("#inputSchool").val();
+		var quarter = $("#inputQuarter").val();
+		var period = $("#inputPeriod").val();		
+		var subject = $("#inputSubject").val();
+
+		var class_urn = ("urn:class:lausd:" + quarter + ":" + school + ":"  + teachername + ":" + subject + ":" + period).toLowerCase();
+		var class_name = toTitleCase(subject) + " " + period + " " + toTitleCase(teachername) + " " + quarter.replace(":", " ");
 		var campaigns = subjectcampaigns[subject];
 		
 		//test if valid subject
@@ -75,14 +77,15 @@ $(function(){
 
 	    // all requests finished successfully		
 		$.when.apply($, requests).done(function() {
-			oh.class.create(class_urn, function(){	
+			oh.class.create(class_urn, class_name, function(){	
 				populateclasses();		
 				$.each(campaigns, function(index, value) {
 					var mycampaign = value;
 					var myxml = xmlstrings[mycampaign];
-					var campaign_urn = class_urn.replace("urn:class:teacher", "urn:campaign:teacher") + ":" + mycampaign;
-					
-					oh.campaign.create(myxml, campaign_urn, class_urn, function(){
+					var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + mycampaign.toLowerCase();
+					var description = mycampaign + " " + period + " " + toTitleCase(teachername) + " " + quarter.replace(":", " "); 
+						
+					oh.campaign.create(myxml, campaign_urn, description, class_urn, function(){
 						console.log("Campaign created: " + campaign_urn)
 					});
 				});					
@@ -111,7 +114,7 @@ $(function(){
 		});
 		
 		//try to delete corresponding campaigns
-		var subject = class_urn.replace("urn:class:teacher:", "").split(":")[0];
+		var subject = class_urn.replace("urn:class:lausd:", "").split(":")[4];
 		console.log("Deleting campaigns for subject: " + subject);
 		
 		//lookup campaigns
@@ -120,7 +123,7 @@ $(function(){
 		//delete some campaigns
 		$.each(campaigns, function(index, value) {
 			var mycampaign = value;
-			var campaign_urn = class_urn.replace("urn:class:teacher", "urn:campaign:teacher") + ":" + mycampaign;		
+			var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + mycampaign;		
 			oh.campaign.delete(campaign_urn, function(){
 				console.log("Campaign deleted: " + campaign_urn)
 			});	
@@ -129,6 +132,10 @@ $(function(){
 		
 	function td(x){
 		return($("<td>").text(x));
+	}	
+	
+	function toTitleCase(str) {
+	    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 	}	
 	
 	//init page
