@@ -126,20 +126,29 @@ $(function(){
 		if(userdata["first_name"] && userdata["last_name"] && userdata["personal_id"]){
 			oh.user.setup(userdata["first_name"], userdata["last_name"], "LAUSD", userdata["personal_id"], function(data){
 				pwfield.text(data.password).attr("data-value", data.password);
-			});
 			
-			var delbtn = $('<button class="btn btn-danger btn-small"> Remove </button>').on("click", function(){
-				delbtn.attr("disabled", "disabled")
-				oh.class.removeuser(class_urn, userdata["username"], function(){
-					mytr.fadeOut();
+				var delbtn = $('<button class="btn btn-danger btn-small"> Remove </button>').on("click", function(){
+					delbtn.attr("disabled", "disabled")
+					oh.class.removeuser(class_urn, userdata["username"], function(){
+						mytr.fadeOut();
+					})
 				})
-			})
-			$("<td>").append(delbtn).appendTo(mytr);
-			
-			var resetbtn = $('<button class="btn btn-warning btn-small"> Reset </button>').on("click", function(){
-				alert("Placeholder for resetting " + userdata["username"])
-			})
-			$("<td>").append(resetbtn).appendTo(mytr);					
+				$("<td>").append(delbtn).appendTo(mytr);
+				
+				var resetbtn = $('<button class="btn btn-warning btn-small"> Reset </button>').on("click", function(){
+					$("#usernamepass").text(userdata["username"]);
+					$(".modal a.btn").off("click");
+					$(".modal a.btn").on("click", function(e){
+						e.preventDefault();
+						oh.user.password(userdata["username"], data.password, $("#newpassword").val(), function(){
+							$(".modal").modal('hide');
+						});						
+					});
+					$("#newpassword").val("");					
+					$(".modal").modal();
+				})
+				$("<td>").append(resetbtn).appendTo(mytr);	
+			});				
 		} else {
 			//these are non-student accounts.
 			pwfield.text("");

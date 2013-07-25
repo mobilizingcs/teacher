@@ -225,6 +225,16 @@ oh.user.setup = function(first_name, last_name, organization, personal_id, cb){
 	});
 }
 
+oh.user.password = function(user, password, new_password, cb){
+	return oh.call("/user/change_password", {
+		user : user,
+		password : password,
+		new_password : new_password
+	}, function(){
+		cb && cb()
+	})
+}
+
 oh.class.read = function(class_urn, cb){
 	var req = oh.call("/class/read", {
 		 class_urn_list : class_urn
