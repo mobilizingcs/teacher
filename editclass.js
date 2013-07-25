@@ -129,12 +129,13 @@ $(function(){
 			pwfield.text("");
 		}
 		if(teacherlogin != userdata["username"]){
-			var delbutn = $('<button class="btn btn-danger btn-small"> Remove </button>').on("click", function(){
+			var delbtn = $('<button class="btn btn-danger btn-small"> Remove </button>').on("click", function(){
+				delbtn.attr("disabled", "disabled")
 				oh.class.removeuser(class_urn, userdata["username"], function(){
 					mytr.fadeOut();
 				})
 			})
-			$("<td>").append(delbutn).appendTo(mytr);
+			$("<td>").append(delbtn).appendTo(mytr);
 			
 			var resetbtn = $('<button class="btn btn-warning btn-small"> Reset </button>').on("click", function(){
 				alert("Placeholder for resetting " + userdata["username"])
