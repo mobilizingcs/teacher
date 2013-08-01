@@ -1,0 +1,8 @@
+- Don't show password if new_account = false
+- Only display students with a temp-password (not teachers, other students)
+- Use teacher last name (from user/user_info) in class/campaign name/urn
+- Put a back button (to index.html) somewhere
+- Use teacher "organization" as school-name URN and student organization
+- Suggest a password when resetting password
+- Sync class list before uploading (or remove students from class_members when deleting)
+- Show class member count somewhere on page.

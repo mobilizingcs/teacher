@@ -125,6 +125,10 @@ $(function(){
 		//these are student accounts
 		if(userdata["first_name"] && userdata["last_name"] && userdata["personal_id"]){
 			oh.user.setup(userdata["first_name"], userdata["last_name"], "LAUSD", userdata["personal_id"], function(data){
+				//check for username collisions
+				if(data.username != userdata.username){
+					alert("Username collision detected: " + data.username + ", " + userdata.username);
+				}
 				//only display the initial password if new_account is true
 				if(userdata.permissions.new_account){
 					pwfield.text(data.password).attr("data-value", data.password);
