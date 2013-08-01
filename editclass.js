@@ -53,9 +53,9 @@ $(function(){
 			}
 		});
 		
-		$.when.apply($, requests1).done(function() {
-			$.when.apply($, requests2).done(function() {
-				//populate the html table
+		$.when.apply($, requests1).always(function() {
+			$.when.apply($, requests2).always(function() {
+				//repopulate the html table
 				updatemembers(function(){
 					loadtable(currentstudents);
 				});
@@ -225,24 +225,26 @@ $(function(){
 	
 	
 	$("#inputRoster").on("change", function loadfile(e){
-		e.preventDefault();
-		readcsvfile($("#inputRoster")[0], function(records){
-			classrecords = [];
-			$.each(records, function(i, rec){
-				try {
-					rec.id = rec["Student ID"];				
-					rec.firstname = rec["Student Name"].split(",")[1].trim();
-					rec.lastname = rec["Student Name"].split(",")[0].trim();
-					rec.tr = $("<tr>").append(td(rec.id)).append(td(rec.firstname)).append(td(rec.lastname));
-					classrecords.push(rec);
-				} catch(err) {
-					alert("CSV parsing error. Failed to read student record:\n\n" + JSON.stringify(rec));
+		updatemembers(function(){
+			e.preventDefault();
+			readcsvfile($("#inputRoster")[0], function(records){
+				classrecords = [];
+				$.each(records, function(i, rec){
+					try {
+						rec.id = rec["Student ID"];				
+						rec.firstname = rec["Student Name"].split(",")[1].trim();
+						rec.lastname = rec["Student Name"].split(",")[0].trim();
+						rec.tr = $("<tr>").append(td(rec.id)).append(td(rec.firstname)).append(td(rec.lastname));
+						classrecords.push(rec);
+					} catch(err) {
+						alert("CSV parsing error. Failed to read student record:\n\n" + JSON.stringify(rec));
+					}
+				});
+				if(classrecords.length > 0){
+					createaccounts(classrecords)
 				}
 			});
-			if(classrecords.length > 0){
-				createaccounts(classrecords)
-			}
-		});
+		})
 	});	
 	
 });
