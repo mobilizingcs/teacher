@@ -187,10 +187,13 @@ $(function(){
 	
 	function loadtable(droppedstudents){
 		$("#studentable tbody").empty();
+		var total = 0;
 		$.each(class_members, function(username, userdata){
 			var isdropped = droppedstudents && (droppedstudents.indexOf(userdata["personal_id"]) > -1);
 			addrow(userdata, isdropped)
+			total++;
 		});
+		$("#urntitle").text(class_urn + "   (" + total + " members)");
 	}		
 	
 	//init page
