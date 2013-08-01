@@ -128,9 +128,8 @@ $(function(){
 				//check for username collisions
 				if(data.username != userdata.username){
 					alert("Username collision detected: " + data.username + ", " + userdata.username);
-				}
-				//only display the initial password if new_account is true
-				if(userdata.permissions.new_account){
+				} else	if(userdata.permissions.new_account){
+					//only display the initial password if new_account is true
 					pwfield.text(data.password).attr("data-value", data.password);
 				} else {
 					pwfield.text("");	
