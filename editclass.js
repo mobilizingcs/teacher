@@ -67,7 +67,10 @@ $(function(){
 				
 				//report added students
 				$("#usercount").text(requests2.length)
-				$("#donealert").show();			
+				$("#donealert").show();		
+				
+				//reset the upload field
+				$("#inputRoster").val("");
 				
 				//save the doc
 				savedoc(classrecords);	
@@ -231,6 +234,9 @@ $(function(){
 	
 	
 	$("#inputRoster").on("change", function loadfile(e){
+		if(!$("#inputRoster").val()){
+			return;
+		}
 		updatemembers(function(){
 			e.preventDefault();
 			readcsvfile($("#inputRoster")[0], function(records){
