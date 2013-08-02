@@ -110,7 +110,7 @@ $(function(){
 	function addrow(userdata, isdropped){
 		var mytr = $("<tr />").appendTo("#studentable tbody");
 		if(isdropped){
-			mytr.addClass("info")
+			mytr.addClass("error")
 		}
 		td(userdata["personal_id"]).appendTo(mytr);
 		td(userdata["first_name"]).appendTo(mytr);
