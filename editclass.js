@@ -112,9 +112,7 @@ $(function(){
 	
 	function addrow(userdata, isdropped){
 		var mytr = $("<tr />").appendTo("#studentable tbody");
-		if(isdropped){
-			mytr.addClass("error")
-		}
+
 		td(userdata["personal_id"]).appendTo(mytr);
 		td(userdata["first_name"]).appendTo(mytr);
 		td(userdata["last_name"]).appendTo(mytr);
@@ -128,6 +126,10 @@ $(function(){
 		//these are student accounts
 		if(userdata["first_name"] && userdata["last_name"] && userdata["personal_id"]){
 			oh.user.setup(userdata["first_name"], userdata["last_name"], userdata["organization"], userdata["personal_id"], function(data){
+				//set if this user is a student
+				if(data.password && isdropped){
+					mytr.addClass("error")
+				}
 				//check for username collisions
 				if(data.username != userdata.username){
 					alert("Username collision detected: " + data.username + ", " + userdata.username);
