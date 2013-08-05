@@ -167,6 +167,7 @@ $(function(){
 				$(".modal a.btn").on("click", function(e){
 					e.preventDefault();
 					oh.user.password(userdata["username"], userdata.password, $("#newpassword").val(), function(){
+						pwfield.text("<changed>");
 						$(".modal").modal('hide');
 					});						
 				});
