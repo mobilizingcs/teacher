@@ -37,6 +37,7 @@ $(function(){
 	
 	function createaccounts(classrecords){
 		var currentstudents = $.map(class_members, function(rec){return rec["personal_id"]});
+		var newstudents = [];
 		var requests1 = [];
 		var requests2 = [];
 		$.each(classrecords, function(i, rec){
@@ -47,7 +48,7 @@ $(function(){
 					rec.username = data.username;
 					rec.password = data.password;
 					requests2.push(oh.class.adduser(class_urn, data.username + ";" + "restricted", function(){
-						//console.log("Added user " + data.username);			
+						newstudents.push(rec.id);			
 					}));
 				}));
 			} else {
@@ -58,11 +59,9 @@ $(function(){
 		$.when.apply($, requests1).always(function() {
 			$.when.apply($, requests2).always(function() {
 				//at this point, 'currentstudents' contains class members that were not in the latest roster
-				
-				
 				//repopulate the html table
 				updatemembers(function(){
-					loadtable(currentstudents);
+					loadtable(currentstudents, newstudents);
 				});
 				
 				//report added students
@@ -110,7 +109,7 @@ $(function(){
 	    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}	
 	
-	function addrow(userdata, isdropped){
+	function addrow(userdata, isdropped, isadded){
 		var mytr = $("<tr />").appendTo("#studentable tbody");
 
 		td(userdata["personal_id"]).appendTo(mytr);
@@ -124,51 +123,49 @@ $(function(){
 		pwfield.appendTo(mytr);
 		
 		//these are student accounts
-		if(userdata["first_name"] && userdata["last_name"] && userdata["personal_id"]){
-			oh.user.setup(userdata["first_name"], userdata["last_name"], userdata["organization"], userdata["personal_id"], function(data){
-				//set if this user is a student
-				if(data.password && isdropped){
-					mytr.addClass("error")
-				}
-				//check for username collisions
-				if(data.username != userdata.username){
-					alert("Username collision detected: " + data.username + ", " + userdata.username);
-				} else if(userdata.permissions.new_account){
-					//only display the initial password if new_account is true
-					pwfield.text(data.password).attr("data-value", data.password);
-				} else {
-					pwfield.text("");	
-				}
-				
-				//only display the reset buttons if the user has an initial password.
-				//this is a hacky way of determining if the student was created with /user/setup
-				if(data.password){
-					var delbtn = $('<button class="btn btn-danger btn-small"> Remove </button>').on("click", function(){
-						delbtn.attr("disabled", "disabled")
-						oh.class.removeuser(class_urn, userdata["username"], function(){
-							mytr.fadeOut();
-						})
-					})
-					$("<td>").append(delbtn).appendTo(mytr);
-					
-					var resetbtn = $('<button class="btn btn-warning btn-small"> Change Passwd </button>').on("click", function(){
-						$("#usernamepass").text(userdata["username"]);
-						$(".modal a.btn").off("click");
-						$(".modal a.btn").on("click", function(e){
-							e.preventDefault();
-							oh.user.password(userdata["username"], data.password, $("#newpassword").val(), function(){
-								$(".modal").modal('hide');
-							});						
-						});
-						$("#newpassword").val("");					
-						$(".modal").modal();
-					})
-					$("<td>").append(resetbtn).appendTo(mytr);	
-				} else {
-					td("").appendTo(mytr);
-					td("").appendTo(mytr);							
-				}
-			});				
+		if(userdata.password){
+
+			//set if this user is a student
+			if(isdropped){
+				mytr.addClass("error")
+			}
+
+			if(isadded){
+				mytr.addClass("success")
+			}
+			
+			//check for username collisions
+			if(userdata.permissions.new_account){
+				//only display the initial password if new_account is true
+				pwfield.text(userdata.password).attr("data-value", userdata.password);
+			} else {
+				pwfield.text("");	
+			}
+			
+			//add the deletebutton
+			var delbtn = $('<button class="btn btn-danger btn-small"> Remove </button>').on("click", function(){
+				delbtn.attr("disabled", "disabled")
+				oh.class.removeuser(class_urn, userdata["username"], function(){
+					mytr.fadeOut();
+				})
+			})
+			$("<td>").append(delbtn).appendTo(mytr);
+			
+			//add the reset password button
+			var resetbtn = $('<button class="btn btn-warning btn-small"> Change Passwd </button>').on("click", function(){
+				$("#usernamepass").text(userdata["username"]);
+				$(".modal a.btn").off("click");
+				$(".modal a.btn").on("click", function(e){
+					e.preventDefault();
+					oh.user.password(userdata["username"], data.password, $("#newpassword").val(), function(){
+						$(".modal").modal('hide');
+					});						
+				});
+				$("#newpassword").val("");					
+				$(".modal").modal();
+			})
+			$("<td>").append(resetbtn).appendTo(mytr);	
+			
 		} else {
 			//these are accounts with no student id. Note sure what to do with them.
 			pwfield.text("");
@@ -180,25 +177,44 @@ $(function(){
 		userdata.tablerow = mytr;
 	}
 	
+	//this function updates the global variable class_members which contains the current class members and their password
 	function updatemembers(cb){
 		oh.class.read(class_urn, function(classlist){
 			oh.user.read(Object.keys(classlist[class_urn].users).toString(), function(userlist){
+				var requests = [];
 				$.each(userlist, function(id, rec){
+					
+					//store role and username in record
 					rec.role = classlist[class_urn].users[id];
 					rec.username = id;
+					
+					//call user setup for each user to get the initial password
+					if(rec["first_name"] && rec["last_name"] && rec["personal_id"] && rec["organization"]){
+						requests.push(oh.user.setup(rec["first_name"], rec["last_name"], rec["organization"], rec["personal_id"], function(data){
+							if(data.username != rec.username){
+								alert("Username collision detected: " + data.username + ", " + rec.username);
+							} else {		
+								rec.password = data.password;
+							}
+						}));
+					}
 				});
-				class_members = userlist;
-				cb && cb();				
+				
+				$.when.apply($, requests).always(function() {
+					class_members = userlist;
+					cb && cb();						
+				});
 			});			
 		});		
 	}
 	
-	function loadtable(droppedstudents){
+	function loadtable(droppedstudents, addedstudents){
 		$("#studentable tbody").empty();
 		var total = 0;
 		$.each(class_members, function(username, userdata){
 			var isdropped = droppedstudents && (droppedstudents.indexOf(userdata["personal_id"]) > -1);
-			addrow(userdata, isdropped)
+			var isadded = addedstudents && (addedstudents.indexOf(userdata["personal_id"]) > -1);
+			addrow(userdata, isdropped, isadded)
 			total++;
 		});
 		$("#urntitle").text(class_urn + "   (" + total + " members)");
