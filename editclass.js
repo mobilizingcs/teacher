@@ -2,7 +2,9 @@ $(function(){
 	
 	var class_urn; 
 	var class_members;
-	var teacherlogin;
+	
+	var teachername;
+	var teacherorg
 	
 	function n2(n){
 	    return n > 9 ? "" + n: "0" + n;
@@ -214,11 +216,16 @@ $(function(){
 	
 	oh.ping(function(){
 		oh.user.whoami(function(x){
-			teacherlogin = x;
-			var teachervec1 = x.split("-");
-			var teachervec2 = teachervec1[teachervec1.length-1].split(".");
-			var teachername = teachervec2[teachervec2.length-1];
-
+			oh.user.read(x, function(data){
+				teachername = data[x].last_name;				
+				teacherorg = data[x].organization;
+				if(!teachername){
+					alert("ERROR: this account has no last name set.")
+				}
+				if(!teacherorg){
+					alert("ERROR: this account has no organization set.")
+				}				
+			});				
 		});
 		
 		oh.user.info(function(res){

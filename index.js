@@ -9,6 +9,7 @@ $(function(){
 	
 	//will be set automatically from login
 	var teachername;
+	var teacherog;
 	
 	//downloads a campaign.xml file
 	function campaignxml(campaign, handler){
@@ -51,7 +52,7 @@ $(function(){
 			
 	$("#createbutton").on("click", function createclass(e){
 		e.preventDefault();
-		var school = $("#inputSchool").val();
+		var school = teacherorg;
 		var quarter = $("#inputQuarter").val();
 		var period = $("#inputPeriod").val();		
 		var subject = $("#inputSubject").val();
@@ -141,13 +142,19 @@ $(function(){
 	//init page
 	oh.ping(function(){
 		oh.user.whoami(function(x){
-			var teachervec1 = x.split("-");
-			var teachervec2 = teachervec1[teachervec1.length-1].split(".");
-			teachername = teachervec2[teachervec2.length-1];
+			oh.user.read(x, function(data){
+				teachername = data[x].last_name;				
+				teacherorg = data[x].organization;
+				if(!teachername){
+					alert("ERROR: this account has no last name set.")
+				}
+				if(!teacherorg){
+					alert("ERROR: this account has no organization set.")
+				}					
+				oh.keepalive();
+				populateclasses();	
+			});
 		});
-		
-		oh.keepalive();
-		populateclasses();		
 	});
 
 });
