@@ -57,15 +57,13 @@ $(function(){
 		
 		$.when.apply($, requests1).always(function() {
 			$.when.apply($, requests2).always(function() {
+				//at this point, 'currentstudents' contains class members that were not in the latest roster
+				
+				
 				//repopulate the html table
 				updatemembers(function(){
 					loadtable(currentstudents);
 				});
-				
-				//show alerts
-				if(currentstudents.length > 0){
-					$("#deletealart").show();
-				} 
 				
 				//report added students
 				$("#usercount").text(requests2.length)
@@ -204,6 +202,9 @@ $(function(){
 			total++;
 		});
 		$("#urntitle").text(class_urn + "   (" + total + " members)");
+		if($("#studentable tbody tr.error").length){
+			$("#deletealart").show();
+		}
 	}		
 	
 	//init page
