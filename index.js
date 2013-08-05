@@ -143,8 +143,8 @@ $(function(){
 	oh.ping(function(){
 		oh.user.whoami(function(x){
 			oh.user.read(x, function(data){
-				teachername = data[x].last_name;				
-				teacherorg = data[x].organization;
+				teachername = data[x].last_name.toLowerCase();				
+				teacherorg = data[x].organization.toLowerCase();
 				if(!teachername){
 					alert("ERROR: this account has no last name set.")
 				}

@@ -43,7 +43,7 @@ $(function(){
 			//add new students
 			var index = currentstudents.indexOf(rec.id);
 			if(index < 0){
-				requests1.push(oh.user.setup(rec.firstname, rec.lastname, "LAUSD", rec.id, function(data){
+				requests1.push(oh.user.setup(rec.firstname, rec.lastname, teacherorg, rec.id, function(data){
 					rec.username = data.username;
 					rec.password = data.password;
 					requests2.push(oh.class.adduser(class_urn, data.username + ";" + "restricted", function(){
@@ -217,8 +217,8 @@ $(function(){
 	oh.ping(function(){
 		oh.user.whoami(function(x){
 			oh.user.read(x, function(data){
-				teachername = data[x].last_name;				
-				teacherorg = data[x].organization;
+				teachername = data[x].last_name.toLowerCase();				
+				teacherorg = data[x].organization.toLowerCase();
 				if(!teachername){
 					alert("ERROR: this account has no last name set.")
 				}
