@@ -148,7 +148,7 @@ $(function(){
 				//only display the initial password if new_account is true
 				pwfield.text(userdata.password).attr("data-value", userdata.password);
 			} else {
-				pwfield.text("");	
+				pwfield.text("<changed>");	
 			}
 			
 			//add the deletebutton
