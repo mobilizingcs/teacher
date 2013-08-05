@@ -38,6 +38,11 @@ select, #inputRoster {
 	margin-top: 50px;
 }
 
+.progress .bar {
+    transition: width 0.1s ease 0s;
+}​
+
+
 
 </style>
 
@@ -85,6 +90,10 @@ select, #inputRoster {
 <!-- 				</div> -->
 
 				<div class="span12">
+				
+				  <div class="progress progress-striped active hide">
+				    <div class="bar" style="width: 0%;"></div>
+				  </div>
 	
 		
 		          <div id="deletealart" class="alert alert-error">

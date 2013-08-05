@@ -40,6 +40,11 @@ $(function(){
 		var newstudents = [];
 		var requests1 = [];
 		var requests2 = [];
+		
+		$(".progress .bar").css("width", "0%")
+		$(".progress").addClass("progress-success").show()
+		var n = 0;
+		
 		$.each(classrecords, function(i, rec){
 			//add new students
 			var index = currentstudents.indexOf(rec.id);
@@ -49,7 +54,11 @@ $(function(){
 					rec.password = data.password;
 					requests2.push(oh.class.adduser(class_urn, data.username + ";" + "restricted", function(){
 						newstudents.push(rec.id);			
+					}).always(function(){
+						$(".progress .bar").css("width", (n++/(classrecords.length*2)) * 100 + "%");
 					}));
+				}).always(function(){
+					$(".progress .bar").css("width", (n++/(classrecords.length*2)) * 100 + "%")
 				}));
 			} else {
 				currentstudents.splice(index, 1);
@@ -178,15 +187,25 @@ $(function(){
 	}
 	
 	//this function updates the global variable class_members which contains the current class members and their password
-	function updatemembers(cb){
+	function updatemembers(cb, nosetup){
+		if(!nosetup){
+			$(".progress .bar").css("width", "0%")
+			$(".progress").removeClass("progress-success").show();
+		}
 		oh.class.read(class_urn, function(classlist){
 			oh.user.read(Object.keys(classlist[class_urn].users).toString(), function(userlist){
 				var requests = [];
+				var n = 0;
 				$.each(userlist, function(id, rec){
 					
 					//store role and username in record
 					rec.role = classlist[class_urn].users[id];
 					rec.username = id;
+					
+					//shortcut
+					if(nosetup){
+						return;
+					}
 					
 					//call user setup for each user to get the initial password
 					if(rec["first_name"] && rec["last_name"] && rec["personal_id"] && rec["organization"]){
@@ -195,16 +214,23 @@ $(function(){
 								alert("Username collision detected: " + data.username + ", " + rec.username);
 							} else {		
 								rec.password = data.password;
-							}
+							}						
+						}).always(function(){
+							$(".progress .bar").css("width", (n++/Object.keys(userlist).length) * 100 + "%")								
 						}));
 					}
 				});
 				
 				$.when.apply($, requests).always(function() {
+					$(".progress").hide();
 					class_members = userlist;
 					cb && cb();						
 				});
+			}).fail(function(){
+				$(".progress").hide();
 			});			
+		}).fail(function(){
+			$(".progress").hide();
 		});		
 	}
 	
@@ -282,7 +308,7 @@ $(function(){
 					createaccounts(classrecords)
 				}
 			});
-		})
+		}, true)
 	});	
 	
 	$('.alert .close').on('click', function () {
