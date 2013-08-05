@@ -166,7 +166,7 @@ $(function(){
 				$(".modal a.btn").off("click");
 				$(".modal a.btn").on("click", function(e){
 					e.preventDefault();
-					oh.user.password(userdata["username"], data.password, $("#newpassword").val(), function(){
+					oh.user.password(userdata["username"], userdata.password, $("#newpassword").val(), function(){
 						$(".modal").modal('hide');
 					});						
 				});
