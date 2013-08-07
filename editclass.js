@@ -49,7 +49,7 @@ $(function(){
 			var index = currentstudents.indexOf(rec.id);
 			if(index < 0){
 				requests1.push(oh.user.setup(rec.firstname, rec.lastname, teacherorg, rec.id, class_urn, function(data){
-					newstudents.push(rec.username);
+					newstudents.push(rec.id);
 					n++
 					rec.username = data.username;
 					rec.password = data.password;
