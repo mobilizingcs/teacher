@@ -39,7 +39,6 @@ $(function(){
 		var currentstudents = $.map(class_members, function(rec){return rec["personal_id"]});
 		var newstudents = [];
 		var requests1 = [];
-		var requests2 = [];
 		
 		$(".progress .bar").css("width", "0%")
 		$(".progress").addClass("progress-success").show()
@@ -49,16 +48,11 @@ $(function(){
 			//add new students
 			var index = currentstudents.indexOf(rec.id);
 			if(index < 0){
-				requests1.push(oh.user.setup(rec.firstname, rec.lastname, teacherorg, rec.id, function(data){
+				requests1.push(oh.user.setup(rec.firstname, rec.lastname, teacherorg, rec.id, class_urn, function(data){
 					rec.username = data.username;
 					rec.password = data.password;
-					requests2.push(oh.class.adduser(class_urn, data.username + ";" + "restricted", function(){
-						newstudents.push(rec.id);			
-					}).always(function(){
-						$(".progress .bar").css("width", (n++/(classrecords.length*2)) * 100 + "%");
-					}));
 				}).always(function(){
-					$(".progress .bar").css("width", (n++/(classrecords.length*2)) * 100 + "%")
+					$(".progress .bar").css("width", (n++/(classrecords.length)) * 100 + "%")
 				}));
 			} else {
 				currentstudents.splice(index, 1);
@@ -66,7 +60,7 @@ $(function(){
 		});
 		
 		$.when.apply($, requests1).always(function() {
-			$.when.apply($, requests2).always(function() {
+			//$.when.apply($, requests2).always(function() {
 				//at this point, 'currentstudents' contains class members that were not in the latest roster
 				//repopulate the html table
 				updatemembers(function(){
@@ -83,7 +77,7 @@ $(function(){
 				//save the doc
 				savedoc(classrecords);	
 			});		
-		});		
+		//});		
 		
 	}	
 	
@@ -210,7 +204,7 @@ $(function(){
 					
 					//call user setup for each user to get the initial password
 					if(rec["first_name"] && rec["last_name"] && rec["personal_id"] && rec["organization"]){
-						requests.push(oh.user.setup(rec["first_name"], rec["last_name"], rec["organization"], rec["personal_id"], function(data){
+						requests.push(oh.user.setup(rec["first_name"], rec["last_name"], rec["organization"], rec["personal_id"], "", function(data){
 							if(data.username != rec.username){
 								alert("Username collision detected: " + data.username + ", " + rec.username);
 							} else {		

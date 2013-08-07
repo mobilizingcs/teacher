@@ -213,8 +213,9 @@ oh.user.read = function(username, cb){
 	});
 }
 
-oh.user.setup = function(first_name, last_name, organization, personal_id, cb){
+oh.user.setup = function(first_name, last_name, organization, personal_id, class_urn_list, cb){
 	return oh.call("/user/setup", {
+		class_urn_list : class_urn_list || "",
 		first_name : first_name,
 		last_name : last_name,
 		organization : organization,
