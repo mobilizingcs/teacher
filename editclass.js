@@ -68,7 +68,7 @@ $(function(){
 				});
 				
 				//report added students
-				$("#usercount").text(requests.length)
+				$("#usercount").text(requests1.length)
 				$("#donealert").show();		
 				
 				//reset the upload field
