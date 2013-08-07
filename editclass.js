@@ -49,10 +49,12 @@ $(function(){
 			var index = currentstudents.indexOf(rec.id);
 			if(index < 0){
 				requests1.push(oh.user.setup(rec.firstname, rec.lastname, teacherorg, rec.id, class_urn, function(data){
+					newstudents.push(rec.username);
+					n++
 					rec.username = data.username;
 					rec.password = data.password;
 				}).always(function(){
-					$(".progress .bar").css("width", (n++/(classrecords.length)) * 100 + "%")
+					$(".progress .bar").css("width", (n/classrecords.length) * 100 + "%")
 				}));
 			} else {
 				currentstudents.splice(index, 1);
@@ -68,7 +70,7 @@ $(function(){
 				});
 				
 				//report added students
-				$("#usercount").text(requests1.length)
+				$("#usercount").text(n);
 				$("#donealert").show();		
 				
 				//reset the upload field
