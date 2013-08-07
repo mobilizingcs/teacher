@@ -25,7 +25,7 @@ $(function(){
 	}
 	
 	//repopulates GUI
-	function populateclasses(){
+	function populateclasses(class_urn){
 		$("#inputClass").empty();
 		$("#classtable tbody").empty();
 		oh.user.info(function(res){
@@ -39,6 +39,10 @@ $(function(){
 					
 					var mybtn = $('<a class="btn btn-primary"><i class="icon-exclamation-sign icon-white"></i> Select</a>')
 					.attr("href", "editclass.html?class=" + key)
+					
+					if(key == class_urn){
+						mytr.addClass("success")
+					}
 					
 					$("<td>").append(mybtn).appendTo(mytr);
 				}
@@ -79,7 +83,7 @@ $(function(){
 	    // all requests finished successfully		
 		$.when.apply($, requests).done(function() {
 			oh.class.create(class_urn, class_name, function(){	
-				populateclasses();		
+				populateclasses(class_urn);		
 				$.each(campaigns, function(index, value) {
 					var mycampaign = value;
 					var myxml = xmlstrings[mycampaign];
