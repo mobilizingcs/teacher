@@ -62,7 +62,7 @@ $(function(){
 		var subject = $("#inputSubject").val();
 
 		var class_urn = ("urn:class:lausd:" + quarter + ":" + school + ":"  + teachername + ":" + subject + ":" + period).toLowerCase();
-		var class_name = toTitleCase(subject) + " " + period + " " + toTitleCase(teachername) + " " + quarter.replace(":", " ");
+		var class_name = toTitleCase(subject) + " " + period + " " + teachername + " " + quarter.replace(":", " ");
 		var campaigns = subjectcampaigns[subject];
 		
 		//test if valid subject
@@ -88,7 +88,7 @@ $(function(){
 					var mycampaign = value;
 					var myxml = xmlstrings[mycampaign];
 					var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + mycampaign.toLowerCase();
-					var description = mycampaign + " " + period + " " + toTitleCase(teachername) + " " + quarter.replace(":", " "); 
+					var description = mycampaign + " " + period + " " + teachername + " " + quarter.replace(":", " "); 
 						
 					oh.campaign.create(myxml, campaign_urn, description, class_urn, function(){
 						console.log("Campaign created: " + campaign_urn)
@@ -147,8 +147,8 @@ $(function(){
 	oh.ping(function(){
 		oh.user.whoami(function(x){
 			oh.user.read(x, function(data){
-				teachername = data[x].last_name.toLowerCase();				
-				teacherorg = data[x].organization.toLowerCase();
+				teachername = utf2ascii(data[x].last_name);			
+				teacherorg = utf2ascii(data[x].organization);
 				if(!teachername){
 					alert("ERROR: this account has no last name set.")
 				}
