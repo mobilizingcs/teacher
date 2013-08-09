@@ -162,9 +162,12 @@ $(function(){
 				$(".modal a.btn").off("click");
 				$(".modal a.btn").on("click", function(e){
 					e.preventDefault();
+					$(".modal a.btn").attr("disabled", "disabled")
 					oh.user.password(userdata["username"], userdata.password, $("#newpassword").val(), function(){
 						pwfield.text("<changed>");
 						$(".modal").modal('hide');
+					}).always(function(){
+						$(".modal a.btn").removeAttr("disabled")
 					});						
 				});
 				$("#newpassword").val("");					
