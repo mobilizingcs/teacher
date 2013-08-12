@@ -163,6 +163,10 @@ $(function(){
 				$(".modal a.btn").off("click");
 				$(".modal a.btn").on("click", function(e){
 					e.preventDefault();
+					if($("#newpassword").val().length < 8){
+						alert("Student password must be at least 8 characters.");
+						return;
+					}
 					$(".modal a.btn").attr("disabled", "disabled")
 					oh.user.password(teacherid, $("#teacherpassword").val(), userdata["username"], $("#newpassword").val(), function(){
 						pwfield.text("<changed>");
