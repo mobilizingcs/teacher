@@ -226,10 +226,11 @@ oh.user.setup = function(first_name, last_name, organization, personal_id, class
 	});
 }
 
-oh.user.password = function(user, password, new_password, cb){
+oh.user.password = function(user, password, username, new_password, cb){
 	return oh.call("/user/change_password", {
 		user : user,
 		password : password,
+		username : username,
 		new_password : new_password
 	}, function(){
 		cb && cb()

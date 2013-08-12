@@ -3,6 +3,7 @@ $(function(){
 	var class_urn; 
 	var class_members;
 	
+	var teacherid;
 	var teachername;
 	var teacherorg
 	
@@ -163,7 +164,7 @@ $(function(){
 				$(".modal a.btn").on("click", function(e){
 					e.preventDefault();
 					$(".modal a.btn").attr("disabled", "disabled")
-					oh.user.password(userdata["username"], userdata.password, $("#newpassword").val(), function(){
+					oh.user.password(teacherid, $("#teacherpassword").val(), userdata["username"], $("#newpassword").val(), function(){
 						pwfield.text("<changed>");
 						$(".modal").modal('hide');
 					}).always(function(){
@@ -259,6 +260,7 @@ $(function(){
 	
 	oh.ping(function(){
 		oh.user.whoami(function(x){
+			teacherid = x;
 			oh.user.read(x, function(data){
 				teachername = data[x].last_name.toLowerCase();				
 				teacherorg = data[x].organization.toLowerCase();
