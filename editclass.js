@@ -122,7 +122,7 @@ $(function(){
 		td(userdata["first_name"]).appendTo(mytr);
 		td(userdata["last_name"]).appendTo(mytr);
 		td(userdata["username"]).appendTo(mytr);
-		td(userdata["role"]).appendTo(mytr);
+		td(userdata["role"]).addClass("noprint").appendTo(mytr);
 		
 		//password field
 		var pwfield = td("");
@@ -155,7 +155,7 @@ $(function(){
 					mytr.fadeOut();
 				})
 			})
-			$("<td>").append(delbtn).appendTo(mytr);
+			$("<td>").addClass("noprint").append(delbtn).appendTo(mytr);
 			
 			//add the reset password button
 			var resetbtn = $('<button class="btn btn-warning btn-small"> Change Passwd </button>').on("click", function(){
@@ -178,7 +178,7 @@ $(function(){
 				$("#newpassword").val("");					
 				$(".modal").modal();
 			})
-			$("<td>").append(resetbtn).appendTo(mytr);	
+			$("<td>").addClass("noprint").append(resetbtn).appendTo(mytr);	
 			
 		} else {
 			//these are accounts with no student id. Note sure what to do with them.
@@ -320,6 +320,13 @@ $(function(){
 	$('.alert .close').on('click', function () {
 	  $(this).parent().hide();
 	})	
+	
+	$("#printbutton").on("click", function(){
+		$("#wrap").toggleClass("printstyle");
+		if($("#wrap").hasClass("printstyle")){
+			window.print();
+		}
+	})
 	
 });
 
