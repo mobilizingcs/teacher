@@ -160,7 +160,13 @@ $(function(){
 			});
 		});
 	});
-
+	
+	$("#signoutbutton").on("click", function(e){
+		e.preventDefault();
+		oh.logout(function(){
+			location.reload(true);
+		});
+	});
 });
 
 

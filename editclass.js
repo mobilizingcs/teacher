@@ -326,7 +326,14 @@ $(function(){
 		if($("#wrap").hasClass("printstyle")){
 			window.print();
 		}
-	})
+	});
+	
+	$("#signoutbutton").on("click", function(e){
+		e.preventDefault();
+		oh.logout(function(){
+			location.reload(true);
+		});
+	});
 	
 });
 
