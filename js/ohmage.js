@@ -293,13 +293,13 @@ oh.class.search = function(filter, cb){
 	});
 }
 
-oh.campaign.create = function(xml, campaign_urn, description, class_urn, cb){
+oh.campaign.create = function(xml, campaign_urn, campaign_name, class_urn, cb){
 	var req = oh.call("/campaign/create", {
 		xml : xml,
 		privacy_state : "shared",
 		running_state : "running",
 		campaign_urn : campaign_urn,	
-		description : description,
+		campaign_name : campaign_name,
 		class_urn_list : class_urn		
 	}, function(res){
 		if(!cb) return;

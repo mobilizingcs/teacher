@@ -88,9 +88,9 @@ $(function(){
 					var mycampaign = value;
 					var myxml = xmlstrings[mycampaign];
 					var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + mycampaign.toLowerCase();
-					var description = mycampaign + " " + period + " " + teachername + " " + quarter.replace(":", " "); 
+					var campaign_name = mycampaign + " " + period + " " + teachername + " " + quarter.replace(":", " "); 
 						
-					oh.campaign.create(myxml, campaign_urn, description, class_urn, function(){
+					oh.campaign.create(myxml, campaign_urn, campaign_name, class_urn, function(){
 						console.log("Campaign created: " + campaign_urn)
 					});
 				});					

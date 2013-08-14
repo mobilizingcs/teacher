@@ -2,7 +2,6 @@
 
 
 <campaign>
-  <campaignName>Nutrition</campaignName>
 
   <surveys>
     <!-- This survey contains simple prompts that are frequently used in many campaigns. 
