@@ -9,7 +9,7 @@ $(function(){
 	
 	//will be set automatically from login
 	var teachername;
-	var teacherog;
+	var teacherorg;
 	
 	//downloads a campaign.xml file
 	function campaignxml(campaign, handler){
