@@ -147,14 +147,19 @@ $(function(){
 	oh.ping(function(){
 		oh.user.whoami(function(x){
 			oh.user.read(x, function(data){
-				teachername = utf2ascii(data[x].last_name);			
-				teacherorg = utf2ascii(data[x].organization);
-				if(!teachername){
-					alert("ERROR: this account has no last name set.")
+				var thisname = data[x].last_name;			
+				var thisorg = data[x].organization;
+				
+				if(!thisname){
+					alert("ERROR: this account has no last name set. Please contact mobilize support.")
 				}
-				if(!teacherorg){
-					alert("ERROR: this account has no organization set.")
-				}					
+				if(!thisorg){
+					alert("ERROR: this account has no organization set. Please contact mobilize support.")
+				}	
+				
+				teachername = utf2ascii(thisname || "empty" );			
+				teacherorg = utf2ascii(thisorg || "empty" );				
+				
 				oh.keepalive();
 				populateclasses();	
 			});
