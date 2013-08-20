@@ -1,6 +1,7 @@
 $(function(){
 	
 	var class_urn; 
+	var class_name;
 	var class_members;
 	
 	var teacherid;
@@ -253,7 +254,7 @@ $(function(){
 			addrow(userdata, isdropped, isadded)
 			total++;
 		});
-		$("#urntitle").text(class_urn + "   (" + total + " members)");
+		$("#urntitle").text(class_name + "   (" + total + " members)");
 		if($("#studentable tbody tr.error").length){
 			$("#deletealart").show();
 		}
@@ -292,6 +293,7 @@ $(function(){
 				alert("Class: " + class_urn + " does not belong to current user.");
 				window.location = "index.html";
 			} else {
+				class_name = userdata.classes[class_urn]
 				updatemembers(loadtable);
 			}
 		});
