@@ -102,13 +102,14 @@ $(function(){
 		e.preventDefault();
 		
 		var class_urn = $("#inputClass").val();
+		var class_name = $("#inputClass").text();
 		if(!class_urn) {
 			alert("No class selected to delete.");
 			return
 		}
 		
 		//confirm
-		if(!confirm("Are you sure you want to delete class: " + class_urn + "?\n\nThis can not be undone!")){
+		if(!confirm("Are you sure you want to delete class: " + class_name + "?\n\nThis can not be undone!")){
 			return
 		};
 		
