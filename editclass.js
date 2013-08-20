@@ -318,7 +318,7 @@ $(function(){
 						rec.tr = $("<tr>").append(td(rec.id)).append(td(rec.firstname)).append(td(rec.lastname));
 						classrecords.push(rec);
 					} catch(err) {
-						alert("CSV parsing error. Failed to read student record:\n\n" + JSON.stringify(rec));
+						console.log("CSV parsing error. Failed to read student record:\n\n" + JSON.stringify(rec));
 					}
 				});
 				if(classrecords.length > 0){
