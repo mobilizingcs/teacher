@@ -116,6 +116,11 @@ $(function(){
 	}	
 	
 	function addrow(userdata, isdropped, isadded){
+		//update Aug 20: only show students
+		if(!userdata.password){
+			return;
+		}
+		
 		var mytr = $("<tr />").appendTo("#studentable tbody");
 
 		td(userdata["personal_id"]).appendTo(mytr);
