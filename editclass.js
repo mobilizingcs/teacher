@@ -118,7 +118,7 @@ $(function(){
 	
 	function addrow(userdata, isdropped, isadded){
 		//update Aug 20: only show students
-		if(!userdata.password){
+		if(!userdata.password && userdata["username"] != teacherid){
 			return;
 		}
 		
