@@ -346,6 +346,19 @@ $(function(){
 		});
 	});
 	
+	$("#genbutton").on("click", function(e){
+		e.preventDefault();
+		$("#genbutton").attr("disabled", "disabled")
+		$.get("http://makeagoodpassword.com/password/simple/", function(data){
+			$("#newpassword").val(data);
+		}).always(function(){
+			$("#genbutton").removeAttr("disabled")
+		}).fail(function(){
+			alert("Failed to do CORS request to makeagoodpassword.com.")
+		});
+		return false;
+	});
+	
 });
 
 
