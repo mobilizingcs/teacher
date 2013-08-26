@@ -101,6 +101,17 @@ oh.utils.error = function(msg){
 
 oh.call = function(path, data, datafun){
 	
+	//THIS IS A HACK FOR LAUSD
+	function errorMessage(code, text){
+		if(path == "/user/change_password" && code == "0203"){
+			return "ERROR: Your password is incorrect.";
+		} else if(path == "/class/create" && text == "The user does not have permission to create new classes."){
+			return "ERROR: Could not create this class. It appears you do not have the class creation privilege. Contact mobilize-support@cs.ucla.edu for assistance.";
+		}
+		//default message
+		return "Fail: " + path + ": " + code + ".\n" + text;
+	}
+	
 	function processError(errors){
 		if(errors[0].code && errors[0].code == "0200"){
 			var pattern = /(is unknown)|(authentication token)|(not provided)/i;
@@ -111,7 +122,7 @@ oh.call = function(path, data, datafun){
 				oh.sendtologin();
 			}
 		} else {
-			alert("Fail: " + path + ":\n" + errors[0].text)
+			alert(errorMessage(errors[0].code, errors[0].text));
 		}
 	}	
 	
