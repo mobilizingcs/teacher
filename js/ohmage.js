@@ -138,7 +138,7 @@ oh.call = function(path, data, datafun){
 		//in case of json
 		if(myrequest.getResponseHeader("content-type") == "application/json"){
 			if(!rsptxt || rsptxt == ""){
-				alert("Undefined error.")
+				alert("Fail: " + path + ". Ohmage returned undefined error.");
 				return false;
 			}			
 			var response = jQuery.parseJSON(rsptxt);
@@ -154,7 +154,9 @@ oh.call = function(path, data, datafun){
 		} else {
 			datafun(rsptxt);
 		}
-	}).error(function(){alert("Ohmage returned an undefined error.")});		
+	}).error(function(){
+		alert("Fail: " + path + ": " + request.status + "\n\n" + request.responseText)
+	});		
 	
 	return(myrequest)
 }
