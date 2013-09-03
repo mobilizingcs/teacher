@@ -101,8 +101,8 @@ $(function(){
 	$("#deletebutton").on("click", function deleteclass(e){
 		e.preventDefault();
 		
-		var class_urn = $("#inputClass").val();
-		var class_name = $("#inputClass").text();
+		var class_urn = $("#inputClass option:selected").val();
+		var class_name = $("#inputClass option:selected").text();
 		if(!class_urn) {
 			alert("No class selected to delete.");
 			return
