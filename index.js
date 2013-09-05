@@ -30,22 +30,24 @@ $(function(){
 		$("#classtable tbody").empty();
 		oh.user.info(function(res){
 			var userdata = res.data[first(res.data)];
-			$.each(userdata.classes, function(key, value){
-				if(key.substr(0,15) == "urn:class:lausd"){
-					$("#inputClass").append($("<option/>", {value: key, text:value}));
-					var mytr = $("<tr />").appendTo("#classtable tbody");
-					td(value).appendTo(mytr);
-					td(key).appendTo(mytr);
-					
-					var mybtn = $('<a class="btn btn-primary"><i class="icon-exclamation-sign icon-white"></i> Select</a>')
-					.attr("href", "editclass.html?class=" + key)
-					
-					if(key == class_urn){
-						mytr.addClass("success")
+			oh.class.read(Object.keys(userdata.classes).toString(), function(classdata){
+				$.each(userdata.classes, function(key, value){
+					if(key.substr(0,15) == "urn:class:lausd" && classdata[key].role == "privileged"){
+						$("#inputClass").append($("<option/>", {value: key, text:value}));
+						var mytr = $("<tr />").appendTo("#classtable tbody");
+						td(value).appendTo(mytr);
+						td(key).appendTo(mytr);
+						
+						var mybtn = $('<a class="btn btn-primary"><i class="icon-exclamation-sign icon-white"></i> Select</a>')
+						.attr("href", "editclass.html?class=" + key)
+						
+						if(key == class_urn){
+							mytr.addClass("success")
+						}
+						
+						$("<td>").append(mybtn).appendTo(mytr);
 					}
-					
-					$("<td>").append(mybtn).appendTo(mytr);
-				}
+				});
 			});
 		});
 			
