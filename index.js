@@ -150,8 +150,9 @@ $(function(){
 	oh.ping(function(){
 		oh.user.whoami(function(x){
 			oh.user.read(x, function(data){
-				var thisname = data[x].last_name;			
-				var thisorg = data[x].organization;
+				
+				var thisname = data[x] && data[x].last_name;			
+				var thisorg = data[x] && data[x].organization;
 				
 				if(!thisname){
 					alert("ERROR: this account has no last name set. Contact mobilize-support@cs.ucla.edu for assistance.")
