@@ -322,7 +322,9 @@ $(function(){
 					}
 				});
 				if(classrecords.length > 0){
-					createaccounts(classrecords)
+					createaccounts(classrecords);
+				} else {
+					alert("No valid records found in this CSV file. Either formatting is incorrect or CSV file is empty.");
 				}
 			});
 		}, true)
