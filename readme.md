@@ -15,6 +15,24 @@ The following naming conventions are used:
     
 The value `urn:campaign:lausd` is hardcoded and only campaigns starting with this prefix will be listed.
 
-      
+## Class-Campaign combinations
+
+When the user creates a new class, the tool automatically deploys a set of campaigns. These are configured at the top of the `index.js` file e.g:
+
+	var subjectcampaigns = {
+		"science" : ["OneDayTrash", "TrashType"],
+		"math" : ["Nutrition"],
+		"ecs" : ["Media", "Snack"]
+	};
+	
+The values correspond to files located in the `xml` subdirectory. For example, when the creates a class with Subject: `science`
+then the tool automatically deploys the campaigns `OneDayTrash.xml` and `TrashType` and adds these these campaigns to this class.
+
+
+
+
+
+
+
 
 
