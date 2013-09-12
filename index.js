@@ -58,7 +58,7 @@ $(function(){
 			
 	$("#createbutton").on("click", function createclass(e){
 		e.preventDefault();
-		if(teacherorg == "empty" || teachername == "empty"){
+		if(teacherorg == "Empty" || teachername == "Empty"){
 			alert("Unable to create class. Your account does not have a valid name and organization.");
 			return;
 		}
@@ -165,8 +165,8 @@ $(function(){
 					alert("ERROR: this account has no organization set. Contact mobilize-support@cs.ucla.edu for assistance.")
 				}	
 				
-				teachername = utf2ascii(thisname || "empty" );			
-				teacherorg = utf2ascii(thisorg || "empty" );				
+				teachername = utf2ascii(thisname || "Empty" );			
+				teacherorg = utf2ascii(thisorg || "Empty" );				
 				
 				oh.keepalive();
 				populateclasses();	
