@@ -26,7 +26,17 @@ When the user creates a new class, the tool automatically deploys a set of campa
 	};
 	
 The values correspond to files located in the `xml` subdirectory. For example, when the creates a class with Subject: `science`
-then the tool automatically deploys the campaigns `OneDayTrash.xml` and `TrashType` and adds these these campaigns to this class.
+then the tool automatically deploys the campaigns `OneDayTrash.xml` and `TrashType.xml` and adds these these campaigns to this class.
+When deleting a class, the tool automatically deleted the corresponding campaigns (according to the naming convention mentioned above).
+
+## Managing users
+
+After selecting a class, the tool navigates to a page to allow the user to manipulate users in the class.
+Note that not all users are shown, only users that were created with the `/user/setup` API are listed.
+
+
+
+ 
 
 
 
