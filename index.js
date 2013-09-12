@@ -58,6 +58,10 @@ $(function(){
 			
 	$("#createbutton").on("click", function createclass(e){
 		e.preventDefault();
+		if(!teacherorg || !teachername){
+			alert("Unable to create class. Your account does not have a valid name and organization.");
+			return;
+		}
 		var school = teacherorg;
 		var quarter = $("#inputQuarter").val();
 		var period = $("#inputPeriod").val();		
