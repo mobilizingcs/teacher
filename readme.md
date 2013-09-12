@@ -39,8 +39,8 @@ After selecting a class, the tool navigates to a page to allow the user to manip
 Note that not all class members are shown, only users that were created with the `/user/setup` API are listed.
 
 New students are added by uploading a CSV file that following internal LAUSD conventions. 
-This means that the CSV file is formatted according to standard csv, and the first line must contain column headers.
-It must contain columns `Student ID` and `Student Name` where the latter is a single string formatted as `Lastname, Firstname`.
+This means that the CSV file is formatted according to standard csv, and the first line contains column headers.
+The columns `Student ID` and `Student Name` must be present and the latter is a single quoted string formatted as `Lastname, Firstname`.
 
 
 
