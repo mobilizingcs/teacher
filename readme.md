@@ -1,7 +1,9 @@
 Ohmage Class/Campaign management tool for teachers
 --------------------------------------------------
 
-Depends: `ohmage-2.16-user_setup_password`
+Depends: 
+ * `ohmage-2.16-user_setup_password`
+ * A browser supporting HTML5
 
 This tool was developed to let lausd teachers easily deploy a set of predefined campaigns. 
 Users of the tool (i.e. teachers) must have the special "user setup" and "class create" privileges, 
@@ -36,9 +38,9 @@ When deleting a class, the tool automatically deleted the corresponding campaign
 After selecting a class, the tool navigates to a page to allow the user to manipulate users in the class.
 Note that not all class members are shown, only users that were created with the `/user/setup` API are listed.
 
-New members are added by uploading a CSV file that follows internal LAUSD conventions. 
-The tool requires that the file users standard CSV formatting, and the first line contains column headers.
-It must contains columns `Student ID` and `Student Name` where the latter is a single string formatted as `Lastname, Firstname`.
+New students are added by uploading a CSV file that following internal LAUSD conventions. 
+This means that the CSV file is formatted according to standard csv, and the first line must contain column headers.
+It must contain columns `Student ID` and `Student Name` where the latter is a single string formatted as `Lastname, Firstname`.
 
 
 
