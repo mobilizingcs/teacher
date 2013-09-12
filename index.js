@@ -58,7 +58,7 @@ $(function(){
 			
 	$("#createbutton").on("click", function createclass(e){
 		e.preventDefault();
-		if(!teacherorg || !teachername){
+		if(teacherorg == "empty" || teachername == "empty"){
 			alert("Unable to create class. Your account does not have a valid name and organization.");
 			return;
 		}
