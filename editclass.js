@@ -79,7 +79,7 @@ $(function(){
 				$("#inputRoster").val("");
 				
 				//save the doc
-				savedoc(classrecords);	
+				//savedoc(classrecords);	
 			});		
 		//});		
 		
@@ -312,9 +312,20 @@ $(function(){
 				classrecords = [];
 				$.each(records, function(i, rec){
 					try {
-						rec.id = rec["Student ID"];				
-						rec.firstname = rec["Student Name"].split(",")[1].trim();
-						rec.lastname = rec["Student Name"].split(",")[0].trim();
+						if(rec["Student ID"]){
+							rec.id = rec["Student ID"];				
+							rec.firstname = rec["Student Name"].split(",")[1].trim();
+							rec.lastname = rec["Student Name"].split(",")[0].trim();							
+						} else if(rec["students_id"]){
+							rec.id = rec["students_id"];
+							rec.firstname = rec["students_firstname"].trim();
+							rec.lastname = rec["students_lastname"].trim();
+						} else {
+							alert("Record " + i + " neither has a field 'Student ID' nor 'students_id'.")
+							return;
+						}
+						
+						//add student
 						rec.tr = $("<tr>").append(td(rec.id)).append(td(rec.firstname)).append(td(rec.lastname));
 						classrecords.push(rec);
 					} catch(err) {
