@@ -321,6 +321,17 @@ oh.campaign.create = function(xml, campaign_urn, campaign_name, class_urn, cb){
 	return req;		
 }
 
+oh.campaign.addclass = function(campaign_urn, class_urn, cb){
+	var req = oh.call("/campaign/update", {
+		campaign_urn : campaign_urn,	
+		class_list_add : class_urn		
+	}, function(res){
+		if(!cb) return;
+		cb()
+	});
+	return req;		
+}
+
 oh.campaign.delete = function(campaign_urn, cb){
 	var req = oh.call("/campaign/delete", {
 		campaign_urn : campaign_urn,		

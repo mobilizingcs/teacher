@@ -98,6 +98,13 @@ $(function(){
 						
 					oh.campaign.create(myxml, campaign_urn, campaign_name, class_urn, function(){
 						console.log("Campaign created: " + campaign_urn)
+					}).done(function(data, textStatus, jqXHR){
+						//this is super nasty but thats what they want and i don't have time to argue
+						if(jqXHR.responseText.match('campaign already exists')){
+							oh.campaign.addclass(campaign_urn, class_urn, function(){
+								console.log("Added class " + class_urn + " to campaign " + campaign_urn);
+							});
+						}
 					});
 				});					
 			});				
