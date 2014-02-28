@@ -2,7 +2,7 @@ $(function(){
 	
 	//these should correspond to name.xml files in the xml dir 
 	var subjectcampaigns = {
-		"science" : ["OneDayTrash", "TrashType"],
+		"science" : ["Trash"],
 		"math" : ["Nutrition"],
 		"ecs" : ["Media", "Snack"]
 	};
