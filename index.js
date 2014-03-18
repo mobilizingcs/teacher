@@ -150,7 +150,7 @@ $(function(){
 	});
 		
 	function td(x){
-		return($("<td>").text(x)attr("data-value", x || 0));
+		return($("<td>").text(x).attr("data-value", x || 0));
 	}	
 	
 	function toTitleCase(str) {
