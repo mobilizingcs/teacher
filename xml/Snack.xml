@@ -57,7 +57,6 @@
                     <promptText>How healthy was the snack? (1 very unhealthy, 5 very healthy)</promptText>
                     <promptType>number</promptType>
                     <default>3</default>
-                    <condition>(SnackPeriod != 4) and (SnackPeriod != 5)</condition>
                     <skippable>false</skippable>
                     <properties>
                         <property>
