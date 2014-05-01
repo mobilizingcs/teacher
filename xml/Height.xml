@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<campaign>
+
+  <surveys>
+    <!-- This survey contains simple prompts that are frequently used in many campaigns. 
+         These prompts are: single choice, multiple choice, number, photo and text.
+	 Conditons for prompts: 
+          1. If the answer to the singleChoice prompt is not 0, then display the 
+	     multiChoice prompt. 
+          2. If the single choice is 0 and a number selected in the number prompt is 
+	     more than or equal to 0, then display the text prompt. 
+	  3. If the photo prompt is SKIPPED or NOT_DISPLAYED, then show a warning message. 
+    -->
+
+    <survey>
+      <!-- survey meta data -->
+      <id>height</id>
+      <title>Height</title>
+      <description>This survey contains questions about height data for a friend or family member.</description>
+      <submitText>Thank you for submitting the height survey!</submitText>
+      <anytime>true</anytime>
+      <summaryText>Height survey</summaryText>
+
+      <contentList>
+
+        <!-- Q1 gender -->
+        <prompt>
+          <id>gender</id>
+          <displayType>event</displayType>
+          <displayLabel>Gender</displayLabel>
+          <promptText>What is your gender?</promptText>
+          <abbreviatedText>gender?</abbreviatedText>
+          <promptType>single_choice</promptType>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>0</key>
+              <label>Male</label>
+            </property>
+            <property>
+              <key>1</key>
+              <label>Female</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Q2 age -->
+        <prompt>
+          <id>age</id>
+          <displayType>event</displayType>
+          <displayLabel>Age</displayLabel>
+          <promptText>What is your age (please round up)?</promptText>
+          <abbreviatedText>age (round up)?</abbreviatedText>
+          <promptType>number</promptType>
+          <properties>
+            <property>
+              <key>min</key>
+              <label>1</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>100</label>
+            </property>
+          </properties>
+          <default>16</default>  
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+        
+        <!-- Q3 height -->
+        <prompt>
+          <id>height</id>
+          <displayType>event</displayType>
+          <displayLabel>Height</displayLabel>
+          <promptText>What is your current height (in inches)?</promptText>
+          <abbreviatedText>height (inches)?</abbreviatedText>
+          <promptType>number</promptType>
+          <properties>
+            <property>
+              <key>min</key>
+              <label>15</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>80</label>
+            </property>
+          </properties>
+          <default>60</default>  
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Q4 armspan -->
+        <prompt>
+          <id>armspan</id>
+          <displayType>event</displayType>
+          <displayLabel>Arm Span</displayLabel>
+          <promptText>What is your current arm span (in inches)?</promptText>
+          <abbreviatedText>arm span (inches)?</abbreviatedText>
+          <promptType>number</promptType>
+          <properties>
+            <property>
+              <key>min</key>
+              <label>15</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>80</label>
+            </property>
+          </properties>
+          <default>60</default>  
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+        
+    </contentList>
+
+   </survey>
+  </surveys>
+</campaign>
