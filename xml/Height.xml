@@ -30,7 +30,7 @@
           <id>gender</id>
           <displayType>event</displayType>
           <displayLabel>Gender</displayLabel>
-          <promptText>What is your gender?</promptText>
+          <promptText>What is their gender?</promptText>
           <abbreviatedText>gender?</abbreviatedText>
           <promptType>single_choice</promptType>
           <!-- options for users to choose from -->
@@ -55,7 +55,7 @@
           <id>age</id>
           <displayType>event</displayType>
           <displayLabel>Age</displayLabel>
-          <promptText>What is your age (please round up)?</promptText>
+          <promptText>What is their age (please round up)?</promptText>
           <abbreviatedText>age (round up)?</abbreviatedText>
           <promptType>number</promptType>
           <properties>
@@ -78,7 +78,7 @@
           <id>height</id>
           <displayType>event</displayType>
           <displayLabel>Height</displayLabel>
-          <promptText>What is your current height (in inches)?</promptText>
+          <promptText>What is their current height (in inches)?</promptText>
           <abbreviatedText>height (inches)?</abbreviatedText>
           <promptType>number</promptType>
           <properties>
@@ -101,7 +101,7 @@
           <id>armspan</id>
           <displayType>event</displayType>
           <displayLabel>Arm Span</displayLabel>
-          <promptText>What is your current arm span (in inches)?</promptText>
+          <promptText>What is their current arm span (in inches)?</promptText>
           <abbreviatedText>arm span (inches)?</abbreviatedText>
           <promptType>number</promptType>
           <properties>
