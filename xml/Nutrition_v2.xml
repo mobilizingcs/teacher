@@ -213,23 +213,45 @@
         
         <!-- Q9 snack enjoyment -->
         <prompt>
-          <id>enjoySnack</id>
-          <displayType>measurement</displayType>
-          <displayLabel>Enjoyment Level</displayLabel>
-          <promptText>How much did you enjoy this snack (1:not at all, 5:loved every moment)?</promptText>
-          <abbreviatedText>Enjoyment level?</abbreviatedText>
-          <promptType>number</promptType>
+          <id>whySnack</id>
+          <displayType>event</displayType>
+          <displayLabel>Why did you eat</displayLabel>
+          <promptText>Why did you eat this snack?</promptText>
+          <abbreviatedText>Why did you eat?</abbreviatedText>
+          <promptType>single_choice</promptType>
+          <!-- options for users to choose from -->
           <properties>
             <property>
-              <key>min</key>
-              <label>1</label>
+              <key>0</key>
+              <label>Hungry/Thirsty</label>
             </property>
             <property>
-              <key>max</key>
-              <label>5</label>
+              <key>1</key>
+              <label>Bored</label>
+            </property>
+            <property>
+              <key>2</key>
+              <label>Stressed</label>
+            </property>
+            <property>
+              <key>3</key>
+              <label>With a meal</label>
+            </property>
+            <property>
+              <key>4</key>
+              <label>Instead of a meal</label>
+            </property>
+            <property>
+              <key>5</key>
+              <label>Just wanted it</label>
+            </property>
+            <property>
+              <key>6</key>
+              <label>Other</label>
             </property>
           </properties>
-          <default>3</default>  
+          <!-- default option -->
+          <default>0</default>
           <skippable>false</skippable>
           <skipLabel>Skip</skipLabel>
         </prompt>
