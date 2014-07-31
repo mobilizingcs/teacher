@@ -1,0 +1,199 @@
+<campaign>
+  <surveys>
+    <survey>
+      <id>footsize</id>
+      <title>Foot Size</title>
+      <description>This survey asks you questions about the size of your foot</description>
+      <submitText>Thank you for filling out the survey!</submitText>
+      <anytime>true</anytime>
+      <summaryText>Foot Size Survey</summaryText>
+
+      <contentList>
+        <!-- Birth gender? -->
+        <prompt>
+          <id>birth_gender</id>
+          <displayLabel>Birth Gender</displayLabel>
+          <promptText>What is your birth/biological gender?</promptText>
+          <abbreviatedText>Day</abbreviatedText>
+          <promptType>single_choice</promptType>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>0</key>
+              <label>Male</label>
+            </property>
+            <property>
+              <key>1</key>
+              <label>Female</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Mens/Womens shoe type? -->
+        <prompt>
+          <id>size_type</id>
+          <displayLabel>Shoe Size Type</displayLabel>
+          <promptText>Are you reporting your shoe size in 'Mens' or 'Womens' sizes?</promptText>
+          <abbreviatedText>Size type</abbreviatedText>
+          <promptType>single_choice</promptType>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>0</key>
+              <label>Mens</label>
+            </property>
+            <property>
+              <key>1</key>
+              <label>Womens</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Shoe Size -->
+        <prompt>
+          <id>shoe_size</id>
+          <displayLabel>Shoe Size</displayLabel>
+          <promptText>What size shoe do you typically wear?</promptText>
+          <abbreviatedText>Shoe size</abbreviatedText>
+          <promptType>single_choice</promptType>
+          <properties>
+            <property>
+              <key>0</key>
+              <label>4</label>
+              <value>4</value>
+            </property>
+            <property>
+              <key>1</key>
+              <label>4.5</label>
+              <value>4.5</value>
+            </property>
+            <property>
+              <key>2</key>
+              <label>5</label>
+              <value>5</value>
+            </property>
+            <property>
+              <key>3</key>
+              <label>5.5</label>
+              <value>5.5</value>
+            </property>
+            <property>
+              <key>4</key>
+              <label>6</label>
+              <value>6</value>
+            </property>
+            <property>
+              <key>5</key>
+              <label>6.5</label>
+              <value>6.5</value>
+            </property>
+            <property>
+              <key>6</key>
+              <label>7</label>
+              <value>7</value>
+            </property>
+            <property>
+              <key>7</key>
+              <label>7.5</label>
+              <value>7.5</value>
+            </property>
+            <property>
+              <key>8</key>
+              <label>8</label>
+              <value>8</value>
+            </property>
+            <property>
+              <key>9</key>
+              <label>8.5</label>
+              <value>8.5</value>
+            </property>
+            <property>
+              <key>10</key>
+              <label>9</label>
+              <value>9</value>
+            </property>
+            <property>
+              <key>11</key>
+              <label>9.5</label>
+              <value>9.5</value>
+            </property>
+            <property>
+              <key>12</key>
+              <label>10</label>
+              <value>10</value>
+            </property>
+            <property>
+              <key>13</key>
+              <label>10.5</label>
+              <value>10.5</value>
+            </property>
+            <property>
+              <key>14</key>
+              <label>11</label>
+              <value>11</value>
+            </property>
+            <property>
+              <key>15</key>
+              <label>11.5</label>
+              <value>11.5</value>
+            </property>
+            <property>
+              <key>16</key>
+              <label>12</label>
+              <value>12</value>
+            </property>
+            <property>
+              <key>17</key>
+              <label>13</label>
+              <value>13</value>
+            </property>
+            <property>
+              <key>18</key>
+              <label>14</label>
+              <value>14</value>
+            </property>
+            <property>
+              <key>19</key>
+              <label>15</label>
+              <value>15</value>
+            </property>
+            <property>
+              <key>20</key>
+              <label>16</label>
+              <value>16</value>
+            </property>
+            <property>
+              <key>21</key>
+              <label>17</label>
+              <value>17</value>
+            </property>
+            <property>
+              <key>22</key>
+              <label>18</label>
+              <value>18</value>
+            </property>
+            <property>
+              <key>23</key>
+              <label>19</label>
+              <value>19</value>
+            </property>
+            <property>
+              <key>24</key>
+              <label>20</label>
+              <value>20</value>
+            </property>
+          </properties>
+          <!-- default option -->
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+      </contentList>
+    </survey>
+  </surveys>
+</campaign>

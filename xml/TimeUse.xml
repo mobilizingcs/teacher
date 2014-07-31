@@ -1,0 +1,485 @@
+<campaign>
+  <surveys>
+    <!-- This survey contains simple prompts that are frequently used in many campaigns. 
+         These prompts are: single choice, multiple choice, number, photo and text.
+	 Conditons for prompts: 
+          1. If the answer to the singleChoice prompt is not 0, then display the 
+	     multiChoice prompt. 
+          2. If the single choice is 0 and a number selected in the number prompt is 
+	     more than or equal to 0, then display the text prompt. 
+	  3. If the photo prompt is SKIPPED or NOT_DISPLAYED, then show a warning message. 
+    -->
+
+    <survey>
+      <id>timeuse</id>
+      <title>Time Use</title>
+      <description>This survey asks you questions about the activities you've participated in during a 5 day period</description>
+      <submitText>Thank you for filling out the survey!</submitText>
+      <anytime>true</anytime>
+      <summaryText>Time Use Survey</summaryText>
+
+      <contentList>
+        <!-- Day? -->
+        <prompt>
+            <id>day</id>
+            <displayType>measurement</displayType>
+            <displayLabel>Day</displayLabel>
+            <promptText>For which day are you collecting data for?</promptText>
+            <abbreviatedText>Day</abbreviatedText>
+            <promptType>number</promptType>
+            <!-- options for users to choose from -->
+            <properties>
+              <property>
+              <key>min</key>
+              <label>1</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>5</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>1</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <prompt>
+            <id>activities</id>
+            <displayType>measurement</displayType>
+            <displayLabel>Activities</displayLabel>
+            <promptText>Since filling out your last survey, what activites have you participated in?</promptText>
+            <abbreviatedText>Activities</abbreviatedText>
+            <promptType>multi_choice</promptType>
+            <properties>
+              <property>
+                <key>0</key>
+                <label>Sleep</label>
+              </property>
+              <property>
+                <key>1</key>
+                <label>Meals/Eating</label>
+              </property>
+              <property>
+                <key>2</key>
+                <label>School</label>
+              </property>
+              <property>
+                <key>3</key>
+                <label>Homework</label>
+              </property>
+              <property>
+                <key>4</key>
+                <label>Working</label>
+              </property>
+              <property>
+                <key>5</key>
+                <label>Grooming</label>
+              </property>
+              <property>
+                <key>6</key>
+                <label>Travel/Commute</label>
+              </property>
+              <property>
+                <key>7</key>
+                <label>Chores</label>
+              </property>
+              <property>
+                <key>8</key>
+                <label>Online</label>
+              </property>
+              <property>
+                <key>9</key>
+                <label>Friends</label>
+              </property>
+              <property>
+                <key>10</key>
+                <label>Television</label>
+              </property>
+              <property>
+                <key>11</key>
+                <label>Videogames</label>
+              </property>
+              <property>
+                <key>12</key>
+                <label>Sports</label>
+              </property>
+              <property>
+                <key>13</key>
+                <label>Reading</label>
+              </property>
+            </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+
+        <!-- Sleep -->
+        <prompt>
+          <id>sleep</id>
+          <displayType>measurement</displayType>
+          <displayLabel>Sleep</displayLabel>
+          <promptText>How many MINUTES have you slept?</promptText>
+          <abbreviatedText>Sleep</abbreviatedText>
+          <promptType>number</promptType>
+          <condition>activities == 0</condition>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>min</key>
+              <label>0</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>9999</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Meals/Eating -->
+        <prompt>
+          <id>meals</id>
+          <displayType>measurement</displayType>
+          <displayLabel>Meals</displayLabel>
+          <promptText>How many MINUTES have you spent eating/drinking?</promptText>
+          <abbreviatedText>Meals</abbreviatedText>
+          <promptType>number</promptType>
+          <condition>activities == 1</condition>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>min</key>
+              <label>0</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>9999</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- School -->
+        <prompt>
+          <id>school</id>
+          <displayType>school</displayType>
+          <displayLabel>School</displayLabel>
+          <promptText>How many MINUTES have you spent in classes at school?</promptText>
+          <abbreviatedText>School</abbreviatedText>
+          <promptType>number</promptType>
+          <condition>activities == 2</condition>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>min</key>
+              <label>0</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>9999</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Homework -->
+        <prompt>
+          <id>homework</id>
+          <displayType>measurement</displayType>
+          <displayLabel>Homework</displayLabel>
+          <promptText>How many MINUTES have you spent doing homework?</promptText>
+          <abbreviatedText>Homework</abbreviatedText>
+          <promptType>number</promptType>
+          <condition>activities == 3</condition>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>min</key>
+              <label>0</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>9999</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Working -->
+        <prompt>
+          <id>work</id>
+          <displayType>measurement</displayType>
+          <displayLabel>Working</displayLabel>
+          <promptText>How many MINUTES have you spent working at a job?</promptText>
+          <abbreviatedText>Working</abbreviatedText>
+          <promptType>number</promptType>
+          <condition>activities == 4</condition>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>min</key>
+              <label>0</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>9999</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Grooming -->
+        <prompt>
+          <id>grooming</id>
+          <displayType>measurement</displayType>
+          <displayLabel>Grooming</displayLabel>
+          <promptText>How many MINUTES have you spent grooming yourself?</promptText>
+          <abbreviatedText>Grooming</abbreviatedText>
+          <promptType>number</promptType>
+          <condition>activities == 5</condition>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>min</key>
+              <label>0</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>9999</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Travel/Commute -->
+        <prompt>
+          <id>travel</id>
+          <displayType>measurement</displayType>
+          <displayLabel>Travel</displayLabel>
+          <promptText>How many MINUTES have you spent traveling/commuting?</promptText>
+          <abbreviatedText>Travel</abbreviatedText>
+          <promptType>number</promptType>
+          <condition>activities == 6</condition>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>min</key>
+              <label>0</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>9999</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Chores -->
+        <prompt>
+          <id>chores</id>
+          <displayType>measurement</displayType>
+          <displayLabel>Chores</displayLabel>
+          <promptText>How many MINUTES have you spent doing household chores?</promptText>
+          <abbreviatedText>Chores</abbreviatedText>
+          <promptType>number</promptType>
+          <condition>activities == 7</condition>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>min</key>
+              <label>0</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>9999</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Online -->
+        <prompt>
+          <id>online</id>
+          <displayType>measurement</displayType>
+          <displayLabel>Online</displayLabel>
+          <promptText>How many MINUTES have you spent online?</promptText>
+          <abbreviatedText>Online</abbreviatedText>
+          <promptType>number</promptType>
+          <condition>activities == 8</condition>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>min</key>
+              <label>0</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>9999</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Friends -->
+        <prompt>
+          <id>friends</id>
+          <displayType>measurement</displayType>
+          <displayLabel>Friends</displayLabel>
+          <promptText>How many MINUTES have you spent with friends (Outside of class)?</promptText>
+          <abbreviatedText>Friends</abbreviatedText>
+          <promptType>number</promptType>
+          <condition>activities == 9</condition>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>min</key>
+              <label>0</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>9999</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Television -->
+        <prompt>
+          <id>television</id>
+          <displayType>measurement</displayType>
+          <displayLabel>Television</displayLabel>
+          <promptText>How many MINUTES have you watched television?</promptText>
+          <abbreviatedText>Television</abbreviatedText>
+          <promptType>number</promptType>
+          <condition>activities == 10</condition>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>min</key>
+              <label>0</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>9999</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Videogames -->
+        <prompt>
+          <id>videogames</id>
+          <displayType>measurement</displayType>
+          <displayLabel>Videogames</displayLabel>
+          <promptText>How many MINUTES have you spent playing videogames?</promptText>
+          <abbreviatedText>Videogames</abbreviatedText>
+          <promptType>number</promptType>
+          <condition>activities == 11</condition>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>min</key>
+              <label>0</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>9999</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Sports -->
+        <prompt>
+          <id>sports</id>
+          <displayType>measurement</displayType>
+          <displayLabel>Sports</displayLabel>
+          <promptText>How many MINUTES have you spent playing sports?</promptText>
+          <abbreviatedText>Sports</abbreviatedText>
+          <promptType>number</promptType>
+          <condition>activities == 12</condition>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>min</key>
+              <label>0</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>9999</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+
+        <!-- Reading -->
+        <prompt>
+          <id>read</id>
+          <displayType>measurement</displayType>
+          <displayLabel>Read</displayLabel>
+          <promptText>How many MINUTES have you spent reading (Not for class)?</promptText>
+          <abbreviatedText>Read</abbreviatedText>
+          <promptType>number</promptType>
+          <condition>activities == 13</condition>
+          <!-- options for users to choose from -->
+          <properties>
+            <property>
+              <key>min</key>
+              <label>0</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>9999</label>
+            </property>
+          </properties>
+          <!-- default option -->
+          <default>0</default>
+          <skippable>false</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+      </contentList>
+    </survey>
+  </surveys>
+</campaign>

@@ -5,6 +5,7 @@ $(function(){
 		"science" : ["Trash"],
 		"math" : ["Nutrition_v2", "Snack", "Height"],
 		"ecs" : ["Media", "Snack"]
+		"ids" : ["Snack", "Nutrition", "FootSize", "PersonalityColor", "StressChill", "TimeUse"]
 	};
 	
 	//will be set automatically from login
