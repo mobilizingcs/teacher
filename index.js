@@ -4,7 +4,7 @@ $(function(){
 	var subjectcampaigns = {
 		"science" : ["Trash"],
 		"math" : ["Nutrition_v2", "Snack", "Height"],
-		"ecs" : ["Media", "Snack"]
+		"ecs" : ["Media", "Snack"],
 		"ids" : ["Snack", "Nutrition", "FootSize", "PersonalityColor", "StressChill", "TimeUse"]
 	};
 	
