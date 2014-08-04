@@ -32,7 +32,8 @@ $(function(){
 		}
 		var filereader = new FileReader();
 		filereader.onload = function(e){
-			handler(d3.csv.parse(e.target.result));
+			//replace is because LAUSD csv files has incorrect line endings
+			handler(d3.csv.parse(e.target.result.replace(/[\n\r]+/g, '\n')));
 		}
 		filereader.readAsText(target.files[0]);
 	}
@@ -326,7 +327,7 @@ $(function(){
 							rec.lastname = rec["students_lastname"].trim();
 						} else {
 							//new format has white lines, so these are expected
-							console.log("Record " + i + " does not have a field 'StudentCode', 'Student ID' or 'students_id':" + JSON.stringify(rec))
+							alert("Failed to read line " + i + "\n" + JSON.stringify(rec));
 							return;
 						}
 
@@ -334,7 +335,7 @@ $(function(){
 						rec.tr = $("<tr>").append(td(rec.id)).append(td(rec.firstname)).append(td(rec.lastname));
 						classrecords.push(rec);
 					} catch(err) {
-						console.log("CSV parsing error. Failed to read student record:\n\n" + JSON.stringify(rec));
+						alert("CSV parsing error. Failed to read line " + i + "\n\n" + JSON.stringify(rec));
 					}
 				});
 				if(classrecords.length > 0){
