@@ -1,30 +1,30 @@
 $(function(){
-	
-	var class_urn; 
+
+	var class_urn;
 	var class_name;
 	var class_members;
-	
+
 	var teacherid;
 	var teachername;
 	var teacherorg
-	
+
 	function n2(n){
 	    return n > 9 ? "" + n: "0" + n;
 	}
-	
+
 	function now(){
 		var today = new Date();
 		return today.getFullYear() + "-" + n2(today.getMonth()+1)  + "-" + n2(today.getDate()) + "_" + n2(today.getHours()) + ":" + n2(today.getMinutes());
 	}
-	
+
 	function td(x){
 		return($("<td>").text(x).attr("data-value", x || 0));
-	}	
-	
+	}
+
 	function first(obj) {
 	    for (var a in obj) return a;
-	}		
-	
+	}
+
 	function readcsvfile(target, handler){
 		if(!target.files[0]){
 			alert("No Roster file selected");
@@ -35,17 +35,17 @@ $(function(){
 			handler(d3.csv.parse(e.target.result));
 		}
 		filereader.readAsText(target.files[0]);
-	}	
-	
+	}
+
 	function createaccounts(classrecords){
 		var currentstudents = $.map(class_members, function(rec){return rec["personal_id"]});
 		var newstudents = [];
 		var requests1 = [];
-		
+
 		$(".progress .bar").css("width", "0%")
 		$(".progress").addClass("progress-success").show()
 		var n = 0;
-		
+
 		$.each(classrecords, function(i, rec){
 			//add new students
 			var index = currentstudents.indexOf(rec.id);
@@ -62,7 +62,7 @@ $(function(){
 				currentstudents.splice(index, 1);
 			}
 		});
-		
+
 		$.when.apply($, requests1).always(function() {
 			//$.when.apply($, requests2).always(function() {
 				//at this point, 'currentstudents' contains class members that were not in the latest roster
@@ -70,21 +70,21 @@ $(function(){
 				updatemembers(function(){
 					loadtable(currentstudents, newstudents);
 				});
-				
+
 				//report added students
 				$("#usercount").text(n);
-				$("#donealert").show();		
-				
+				$("#donealert").show();
+
 				//reset the upload field
 				$("#inputRoster").val("");
-				
+
 				//save the doc
-				//savedoc(classrecords);	
-			});		
-		//});		
-		
-	}	
-	
+				//savedoc(classrecords);
+			});
+		//});
+
+	}
+
 	function savedoc(classrecords){
 		var classdb = $.map( classrecords, function(val, i) {
 			return {
@@ -92,10 +92,10 @@ $(function(){
 				"Student Name" : val["Student Name"],
 				"username" : val["username"],
 				"password" : val["password"],
-				
+
 			}
-		});	
-		
+		});
+
 		classdb.sort(function (a, b) {
 			if (a["Student ID"] > b["Student ID"])
 				return 1;
@@ -103,25 +103,25 @@ $(function(){
 		    	return -1;
 		    return 0;
 		  });
-		
-		//save the doc		
+
+		//save the doc
 		var doctitle = class_urn + "_" + now() + "_students.csv"
 		oh.document.create(doctitle, d3.csv.format(classdb), class_urn);
-	}	
-	
+	}
+
 	function getParameterByName(name) {
 	    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
 	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
 	        results = regex.exec(location.search);
 	    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-	}	
-	
+	}
+
 	function addrow(userdata, isdropped, isadded){
 		//update Aug 20: only show students
 		if(!userdata.password && userdata["username"] != teacherid){
 			return;
 		}
-		
+
 		var mytr = $("<tr />").appendTo("#studentable tbody");
 
 		td(userdata["personal_id"]).appendTo(mytr);
@@ -129,11 +129,11 @@ $(function(){
 		td(userdata["last_name"]).appendTo(mytr);
 		td(userdata["username"]).appendTo(mytr);
 		td(userdata["role"]).addClass("noprint").appendTo(mytr);
-		
+
 		//password field
 		var pwfield = td("");
 		pwfield.appendTo(mytr);
-		
+
 		//these are student accounts
 		if(userdata.password){
 
@@ -145,15 +145,15 @@ $(function(){
 			if(isadded){
 				mytr.addClass("success")
 			}
-			
+
 			//check for username collisions
 			if(userdata.permissions.new_account){
 				//only display the initial password if new_account is true
 				pwfield.text(userdata.password).attr("data-value", userdata.password);
 			} else {
-				pwfield.text("<changed>");	
+				pwfield.text("<changed>");
 			}
-			
+
 			//add the deletebutton
 			var delbtn = $('<button class="btn btn-danger btn-small"> Remove </button>').on("click", function(){
 				delbtn.attr("disabled", "disabled")
@@ -162,7 +162,7 @@ $(function(){
 				})
 			})
 			$("<td>").addClass("noprint").append(delbtn).appendTo(mytr);
-			
+
 			//add the reset password button
 			var resetbtn = $('<button class="btn btn-warning btn-small"> Change Passwd </button>').on("click", function(){
 				$("#usernamepass").text(userdata["username"]);
@@ -179,24 +179,24 @@ $(function(){
 						$(".modal").modal('hide');
 					}).always(function(){
 						$(".modal a.btn").removeAttr("disabled")
-					});						
+					});
 				});
-				$("#newpassword").val("");					
+				$("#newpassword").val("");
 				$(".modal").modal();
 			})
-			$("<td>").addClass("noprint").append(resetbtn).appendTo(mytr);	
-			
+			$("<td>").addClass("noprint").append(resetbtn).appendTo(mytr);
+
 		} else {
 			//these are accounts with no student id. Note sure what to do with them.
 			pwfield.text("");
 			td("").appendTo(mytr);
-			td("").appendTo(mytr);			
+			td("").appendTo(mytr);
 		}
-		
+
 		//for later reference
 		userdata.tablerow = mytr;
 	}
-	
+
 	//this function updates the global variable class_members which contains the current class members and their password
 	function updatemembers(cb, nosetup){
 		if(!nosetup){
@@ -208,43 +208,43 @@ $(function(){
 				var requests = [];
 				var n = 0;
 				$.each(userlist, function(id, rec){
-					
+
 					//store role and username in record
 					rec.role = classlist[class_urn].users[id];
 					rec.username = id;
-					
+
 					//shortcut
 					if(nosetup){
 						return;
 					}
-					
+
 					//call user setup for each user to get the initial password
 					if(rec["first_name"] && rec["last_name"] && rec["personal_id"] && rec["organization"]){
 						requests.push(oh.user.setup(rec["first_name"], rec["last_name"], rec["organization"], rec["personal_id"], "", function(data){
 							if(data.username != rec.username){
 								alert("Username collision detected: " + data.username + ", " + rec.username);
-							} else {		
+							} else {
 								rec.password = data.password;
-							}						
+							}
 						}).always(function(){
-							$(".progress .bar").css("width", (n++/Object.keys(userlist).length) * 100 + "%")								
+							$(".progress .bar").css("width", (n++/Object.keys(userlist).length) * 100 + "%")
 						}));
 					}
 				});
-				
+
 				$.when.apply($, requests).always(function() {
 					$(".progress").hide();
 					class_members = userlist;
-					cb && cb();						
+					cb && cb();
 				});
 			}).fail(function(){
 				$(".progress").hide();
-			});			
+			});
 		}).fail(function(){
 			$(".progress").hide();
-		});		
+		});
 	}
-	
+
 	function loadtable(droppedstudents, addedstudents){
 		$("#studentable tbody").empty();
 		var total = 0;
@@ -258,8 +258,8 @@ $(function(){
 		if($("#studentable tbody tr.error").length){
 			$("#deletealart").show();
 		}
-	}		
-	
+	}
+
 	//init page
 	class_urn= getParameterByName("class");
 	if(!class_urn){
@@ -267,26 +267,26 @@ $(function(){
 	} else {
 		$("#urntitle").text(class_urn);
 	}
-	
+
 	oh.ping(function(){
 		oh.user.whoami(function(x){
 			teacherid = x;
 			oh.user.read(x, function(data){
-				var thisname = data[x].last_name;			
+				var thisname = data[x].last_name;
 				var thisorg = data[x].organization;
-				
+
 				if(!thisname){
 					alert("ERROR: this account has no last name set. Please contact mobilize support.")
 				}
 				if(!thisorg){
 					alert("ERROR: this account has no organization set. Please contact mobilize support.")
-				}	
-				
-				teachername = utf2ascii(thisname || "empty" );			
-				teacherorg = utf2ascii(thisorg || "empty" );			
-			});				
+				}
+
+				teachername = utf2ascii(thisname || "empty" );
+				teacherorg = utf2ascii(thisorg || "empty" );
+			});
 		});
-		
+
 		oh.user.info(function(res){
 			var userdata = res.data[first(res.data)];
 			if(Object.keys(userdata.classes).indexOf(class_urn) < 0){
@@ -297,11 +297,11 @@ $(function(){
 				updatemembers(loadtable);
 			}
 		});
-			
+
 		oh.keepalive();
 	});
-	
-	
+
+
 	$("#inputRoster").on("change", function loadfile(e){
 		if(!$("#inputRoster").val()){
 			return;
@@ -312,19 +312,24 @@ $(function(){
 				classrecords = [];
 				$.each(records, function(i, rec){
 					try {
-						if(rec["Student ID"]){
-							rec.id = rec["Student ID"];				
+						if(rec["StudentCode"]){
+							rec.id = rec["StudentCode"]
+							rec.firstname = rec["StudentName1"].split(",")[1].trim();
+							rec.lastname = rec["StudentName1"].split(",")[0].trim();
+						} else if(rec["Student ID"]){
+							rec.id = rec["Student ID"];
 							rec.firstname = rec["Student Name"].split(",")[1].trim();
-							rec.lastname = rec["Student Name"].split(",")[0].trim();							
+							rec.lastname = rec["Student Name"].split(",")[0].trim();
 						} else if(rec["students_id"]){
 							rec.id = rec["students_id"];
 							rec.firstname = rec["students_firstname"].trim();
 							rec.lastname = rec["students_lastname"].trim();
 						} else {
-							alert("Record " + i + " neither has a field 'Student ID' nor 'students_id'.")
+							//new format has white lines, so these are expected
+							console.log("Record " + i + " does not have a field 'StudentCode', 'Student ID' or 'students_id':" + JSON.stringify(rec))
 							return;
 						}
-						
+
 						//add student
 						rec.tr = $("<tr>").append(td(rec.id)).append(td(rec.firstname)).append(td(rec.lastname));
 						classrecords.push(rec);
@@ -339,26 +344,26 @@ $(function(){
 				}
 			});
 		}, true)
-	});	
-	
+	});
+
 	$('.alert .close').on('click', function () {
 	  $(this).parent().hide();
-	})	
-	
+	})
+
 	$("#printbutton").on("click", function(){
 		$("#wrap").toggleClass("printstyle");
 		if($("#wrap").hasClass("printstyle")){
 			window.print();
 		}
 	});
-	
+
 	$("#signoutbutton").on("click", function(e){
 		e.preventDefault();
 		oh.logout(function(){
 			location.reload(true);
 		});
 	});
-	
+
 	$("#genbutton").on("click", function(e){
 		e.preventDefault();
 		$("#genbutton").attr("disabled", "disabled")
@@ -371,7 +376,7 @@ $(function(){
 		});
 		return false;
 	});
-	
+
 });
 
 
