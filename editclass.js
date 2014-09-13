@@ -124,7 +124,7 @@ $(function(){
 		}
 
 		//for printing slip:
-		$("#studentable tbody").append('<tr class="printtitlerow"><th>Student ID/th><th>First</th><th>Last</th><th>Username</th><th class="noprint">role</th><th>Password</th><th class="noprint"></th><th class="noprint"></th></tr>');
+		$("#studentable tbody").append('<tr class="printtitlerow"><th>Student ID</th><th>First</th><th>Last</th><th>Username</th><th class="noprint">role</th><th>Password</th><th class="noprint"></th><th class="noprint"></th></tr>');
 
 		var mytr = $("<tr />").appendTo("#studentable tbody");
 		td(userdata["personal_id"]).appendTo(mytr);
