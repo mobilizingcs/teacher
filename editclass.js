@@ -189,8 +189,8 @@ $(function(){
 		} else {
 			//these are accounts with no student id. Note sure what to do with them.
 			pwfield.text("");
-			td("").appendTo(mytr);
-			td("").appendTo(mytr);
+			td("").addClass("noprint").appendTo(mytr);
+			td("").addClass("noprint").appendTo(mytr);
 		}
 
 		//for later reference
