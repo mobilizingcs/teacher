@@ -123,6 +123,9 @@ $(function(){
 			return;
 		}
 
+		//for printing slip:
+		$("#studentable tbody").append('<tr class="printtitlerow"><th>Student ID/th><th>First</th><th>Last</th><th>Username</th><th class="noprint">role</th><th>Password</th><th class="noprint"></th><th class="noprint"></th></tr>');
+
 		var mytr = $("<tr />").appendTo("#studentable tbody");
 		td(userdata["personal_id"]).appendTo(mytr);
 		td(userdata["first_name"]).appendTo(mytr);
@@ -195,10 +198,6 @@ $(function(){
 
 		//for later reference
 		userdata.tablerow = mytr;
-
-		//for printing:
-		$("#studentable tbody").append('<tr class="printtitlerow"><th>Student ID</th><th>First</th><th>Last</th><th>username</th><th class="noprint">role</th><th>initial password</th><th class="noprint"></th><th class="noprint"></th></tr>');
-
 	}
 
 	//this function updates the global variable class_members which contains the current class members and their password
