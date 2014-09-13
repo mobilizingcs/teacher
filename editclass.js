@@ -123,6 +123,8 @@ $(function(){
 			return;
 		}
 
+
+		$("#studentable tbody").append('<tr class="printtitlerow"><th>Student ID</th><th>First</th><th>Last</th><th>username</th><th>role</th><th>initial password</th></tr>');
 		var mytr = $("<tr />").appendTo("#studentable tbody");
 
 		td(userdata["personal_id"]).appendTo(mytr);

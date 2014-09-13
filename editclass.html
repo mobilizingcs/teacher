@@ -40,8 +40,12 @@ select, #inputRoster {
     transition: width 0.1s ease 0s;
 }
 
-.printstyle form, .printstyle button, .printstyle a, .printstyle .page-header, .printstyle .modal .printstyle .noprint{
+.printtitlerow .printstyle form, .printstyle button, .printstyle a, .printstyle .page-header, .printstyle .modal .printstyle .noprint {
   display: none;
+}
+
+.printstyle .printtitlerow {
+  display: inline !important;
 }
 
 .printstyle .container{
@@ -79,14 +83,14 @@ select, #inputRoster {
 		<div class="container">
 			<div class="row">
         <div class="span2">
-          <a id="backbutton" class="btn btn-primary" href="index.html"><i class="icon-circle-arrow-left icon-white"></i> Go Back</a> <br />       
-        </div>			
+          <a id="backbutton" class="btn btn-primary" href="index.html"><i class="icon-circle-arrow-left icon-white"></i> Go Back</a> <br />
+        </div>
 				<div class="span8">
 					<div class="page-header">
 					  <h1>Class Setup</h1>
 					</div>
 				</div>
-				
+
 				<div class="span6">
 					<div>
 						<form class="form-horizontal">
@@ -99,7 +103,7 @@ select, #inputRoster {
 								</div>
 							</fieldset>
 						</form>
-					</div>				
+					</div>
 				</div>
 			</div>
 
@@ -107,32 +111,32 @@ select, #inputRoster {
 <!-- 				<div class="span2"> -->
 <!-- 					<div> -->
 <!-- 						<h3>Step 2</h3> -->
-						
+
 <!-- 						<p><i>Add and remove students from the class.</i></p> -->
 <!-- 					</div> -->
 <!-- 				</div> -->
 
 				<div class="span12">
-				
+
 				  <div class="progress progress-striped active hide">
 				    <div class="bar" style="width: 0%;"></div>
 				  </div>
-	
-		
+
+
 		          <div id="deletealart" class="alert alert-error">
 		            <button type="button" class="close">&times;</button>
 		            <strong>Warning:</strong> Some users which are currently in the class were not in the uploaded roster file.
-		            These are highlighted below. Make sure to delete students which are no longer enrolled from the system. 
-		          </div>	
-		          
+		            These are highlighted below. Make sure to delete students which are no longer enrolled from the system.
+		          </div>
+
 		          <div id="donealert" class="alert alert-success">
 		            <button type="button" class="close">&times;</button>
 		            <strong>Success!</strong> A total of <span id="usercount"></span> new users was added to the class.<br />
-		          </div>		          				
-					
-					<h3 id="urntitle"></h3> 
+		          </div>
+
+					<h3 id="urntitle"></h3>
 					<button id="printbutton" type="button" class="btn" data-toggle="button"><i class="icon-print icon-large"></i> Print View</button>
-					
+
 					<table class="table table-striped table-hover sortable" id="studentable">
 						<thead>
 							<tr>
@@ -141,19 +145,19 @@ select, #inputRoster {
 								<th>Last</th>
 								<th>username</th>
 								<th>role</th>
-								<th>initial password</th>	
+								<th>initial password</th>
 								<td class="noprint"> </td>
-								<td class="noprint"> </td>																								
+								<td class="noprint"> </td>
 							</tr>
 						</thead>
 						<tbody>
-							<tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>							
+							<tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>
 						</tbody>
-					</table>	
-										
+					</table>
+
 				</div>
 			</div>
-			
+
 			<div class="modal hide fade">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -179,8 +183,8 @@ select, #inputRoster {
 				<div class="modal-footer">
 					<a href="#" class="btn btn-primary">Save</a>
 				</div>
-			</div>				
-			
+			</div>
+
 		</div>
 	</div>
 </body>
