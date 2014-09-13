@@ -166,7 +166,7 @@ oh.call = function(path, data, datafun){
 			datafun(rsptxt);
 		}
 	}).error(function(){
-		if(myrequest){
+		if(myrequest.status){
 			alert("Fail: " + path + ": " + myrequest.status + "\n\n" + myrequest.responseText)
 		}
 	});
