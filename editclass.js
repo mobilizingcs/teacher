@@ -197,7 +197,7 @@ $(function(){
 		userdata.tablerow = mytr;
 
 		//for printing:
-		$("#studentable tbody").append('<tr class="printtitlerow"><th>Student ID</th><th>First</th><th>Last</th><th>username</th><th>role</th><th>initial password</th></tr>');
+		$("#studentable tbody").append('<tr class="printtitlerow"><th>Student ID</th><th>First</th><th>Last</th><th>username</th><th>role</th><th>initial password</th><th></th><th></th></tr>');
 
 	}
 
