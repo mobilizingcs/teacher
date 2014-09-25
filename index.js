@@ -223,7 +223,7 @@ $(function(){
 	var day = (new Date()).getDate();
 	var year = (new Date()).getFullYear();
 
-	if(month < 6 && day < 16){
+	if(month < 5 || (month == 5 && day < 16)){
 		//up till June 15
 		$("#inputQuarter")
 			.append($("<option />").attr("value", year + ":Spring").text("Spring " + year))
