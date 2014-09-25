@@ -4,6 +4,7 @@ oh.user = oh.user || {};
 oh.class = oh.class || {};
 oh.campaign = oh.campaign || {};
 oh.document = oh.document || {};
+oh.survey = oh.survey || {};
 
 oh.utils.delayexec = function(){
 	var timer;
@@ -369,6 +370,20 @@ oh.document.contents = function(document_id, cb){
 		document_id : document_id
 	}, function(res){
 		cb && cb(res)
+	});
+}
+
+oh.survey.responsecount = function(urn, cb){
+	return oh.call("/survey_response/function/read", {
+		campaign_urn : urn,
+		id : "privacy_state"
+	}, function(res){
+		if(!cb) return;
+		var count = 0;
+		$.each(res.data, function(key, value){
+			count += value[0].count;
+		})
+		cb(count)
 	});
 }
 

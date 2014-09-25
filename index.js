@@ -57,6 +57,31 @@ $(function(){
 		}
 	}
 
+	function testallempty(class_urn, cb){
+		var subject = class_urn.replace("urn:class:lausd:", "").split(":")[4];
+		var campaigns = subjectcampaigns[subject];
+		var counts = {};
+		var requests = $.map(campaigns, function(campaign, i){
+			var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + campaign;
+			var req = oh.survey.responsecount(campaign_urn, function(n){
+				counts[campaign] = n;
+			})
+			return req;
+		});
+
+		//triggered after all counts are in
+		$.when.apply($, requests).always(function() {
+			var ok = true;
+			$.each(counts, function(campaign, n){
+				if(!ok || n === 0) return;
+				if(!confirm("Campaign " + campaign + " has " + n + " responses which will be deleted. Are you sure?")){
+					ok = false;
+				}
+			})
+			if(ok && cb) cb();
+		});
+	}
+
 	$("#createbutton").on("click", function createclass(e){
 		e.preventDefault();
 		if(teacherorg == "Empty" || teachername == "Empty"){
@@ -127,25 +152,27 @@ $(function(){
 			return
 		};
 
+		//test for existing responses first
+		testallempty(class_urn, function(){
 
-		//delete class
-		oh.class.delete(class_urn, function(){
-			populateclasses();
-		});
+			//delete class
+			oh.class.delete(class_urn, function(){
+				populateclasses();
+			});
 
-		//try to delete corresponding campaigns
-		var subject = class_urn.replace("urn:class:lausd:", "").split(":")[4];
-		console.log("Deleting campaigns for subject: " + subject);
+			//try to delete corresponding campaigns
+			var subject = class_urn.replace("urn:class:lausd:", "").split(":")[4];
+			console.log("Deleting campaigns for subject: " + subject);
 
-		//lookup campaigns
-		var campaigns = subjectcampaigns[subject];
+			//lookup campaigns
+			var campaigns = subjectcampaigns[subject];
 
-		//delete some campaigns
-		$.each(campaigns, function(index, value) {
-			var mycampaign = value;
-			var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + mycampaign;
-			oh.campaign.delete(campaign_urn, function(){
-				console.log("Campaign deleted: " + campaign_urn)
+			//delete some campaigns
+			$.each(campaigns, function(index, mycampaign) {
+				var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + mycampaign;
+				oh.campaign.delete(campaign_urn, function(){
+					console.log("Campaign deleted: " + campaign_urn)
+				});
 			});
 		});
 	});
