@@ -131,16 +131,16 @@ $(function(){
 					var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + mycampaign.toLowerCase();
 					var campaign_name = mycampaign + " " + period + " " + teachername + " " + quarter.replace(":", " ");
 
-					oh.campaign.create(myxml, campaign_urn, campaign_name, class_urn, function(){
-						console.log("Campaign created: " + campaign_urn)
-					}).done(function(data, textStatus, jqXHR){
-						//this is super nasty but thats what they want and i don't have time to argue
-						if(jqXHR.responseText.match('campaign already exists')){
-							oh.campaign.addclass(campaign_urn, class_urn, function(){
-								console.log("Added class " + class_urn + " to campaign " + campaign_urn);
-							});
-						}
-					});
+					if(user_campaigns.indexOf(campaign_urn) < 0){
+						//campaign does not exist
+						oh.campaign.create(myxml, campaign_urn, campaign_name, class_urn, function(){
+							console.log("Campaign created: " + campaign_urn);
+						});
+					} else {
+						oh.campaign.addclass(campaign_urn, class_urn, function(){
+							console.log("Campaign already exists. Adding class " + class_urn + " to campaign " + campaign_urn);
+						});
+					}
 				});
 			});
 		});
