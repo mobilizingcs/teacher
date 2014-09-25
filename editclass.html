@@ -32,21 +32,21 @@ select, #inputRoster {
 }
 
 #signoutbutton, #backbutton{
-  width: 80px;
+	width: 80px;
 	margin-top: 30px;
 }
 
 .progress .bar {
-    transition: width 0.1s ease 0s;
+	transition: width 0.1s ease 0s;
 }
 
 tr.printtitlerow, .printstyle form, .printstyle button, .printstyle a, .printstyle .page-header, .printstyle .modal, .printstyle .noprint {
-  display: none;
+	display: none;
 }
 
 .printstyle tr.printtitlerow {
-  display: table-row;
-  border-top: dashed black 2px;
+	display: table-row;
+	border-top: dashed black 2px;
 }
 
 .printtitlerow th{
@@ -54,28 +54,28 @@ tr.printtitlerow, .printstyle form, .printstyle button, .printstyle a, .printsty
 }
 
 .printstyle .container{
-  margin-left: 10px;
+	margin-left: 10px;
 }
 
 .printstyle th, .printstyle table td{
-  min-width: 130px;
+	min-width: 130px;
 }
 
 .printstyle tr{
-  height: 50px;
-  font-size: 120%;
+	height: 50px;
+	font-size: 120%;
 }
 
 .printstyle td, .printstyle th {
-  white-space: nowrap;
+	white-space: nowrap;
 }
 
 .printstyle #printbutton{
-  display: block;
+	display: block;
 }
 
 #printbutton, #signoutbutton {
-  float: right;
+	float: right;
 }​
 
 </style>
@@ -89,13 +89,14 @@ tr.printtitlerow, .printstyle form, .printstyle button, .printstyle a, .printsty
 		<!-- Begin page content -->
 		<div class="container">
 			<div class="row">
-        <div class="span2">
-          <a id="backbutton" class="btn btn-primary" href="index.html"><i class="icon-circle-arrow-left icon-white"></i> Go Back</a> <br />
-        </div>
+				<div class="span2">
+					<a id="backbutton" class="btn btn-primary" href="index.html"><i class="icon-circle-arrow-left icon-white"></i> Go Back</a> <br />
+				</div>
 				<div class="span8">
 					<div class="page-header">
-					  <h1>Class Setup</h1>
+						<h1>Class Setup</h1>
 					</div>
+					<p><i>Add or remove students from the class. Visit the <a href="https://wiki.mobilizingcs.org/app/web/teacher">wiki help page</a> for more detailed instructions.</i></p>
 				</div>
 
 				<div class="span6">
@@ -115,31 +116,24 @@ tr.printtitlerow, .printstyle form, .printstyle button, .printstyle a, .printsty
 			</div>
 
 			<div class="row">
-<!-- 				<div class="span2"> -->
-<!-- 					<div> -->
-<!-- 						<h3>Step 2</h3> -->
-
-<!-- 						<p><i>Add and remove students from the class.</i></p> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
 
 				<div class="span12">
 
-				  <div class="progress progress-striped active hide">
-				    <div class="bar" style="width: 0%;"></div>
-				  </div>
+					<div class="progress progress-striped active hide">
+						<div class="bar" style="width: 0%;"></div>
+					</div>
 
 
-		          <div id="deletealart" class="alert alert-error">
-		            <button type="button" class="close">&times;</button>
-		            <strong>Warning:</strong> Some users which are currently in the class were not in the uploaded roster file.
-		            These are highlighted below. Make sure to delete students which are no longer enrolled from the system.
-		          </div>
+					<div id="deletealart" class="alert alert-error">
+						<button type="button" class="close">&times;</button>
+						<strong>Warning:</strong> Some users which are currently in the class were not in the uploaded roster file.
+						These are highlighted below. Make sure to delete students which are no longer enrolled from the system.
+					</div>
 
-		          <div id="donealert" class="alert alert-success">
-		            <button type="button" class="close">&times;</button>
-		            <strong>Success!</strong> A total of <span id="usercount"></span> new users was added to the class.<br />
-		          </div>
+					<div id="donealert" class="alert alert-success">
+						<button type="button" class="close">&times;</button>
+						<strong>Success!</strong> A total of <span id="usercount"></span> new users was added to the class.<br />
+					</div>
 
 					<h3 id="urntitle"></h3>
 					<button id="printbutton" type="button" class="btn" data-toggle="button"><i class="icon-print icon-large"></i> Print View</button>
@@ -172,26 +166,25 @@ tr.printtitlerow, .printstyle form, .printstyle button, .printstyle a, .printsty
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal">
-					  <div class="control-group">
-					    <label class="control-label" for="inputEmail">Teacher's password</label>
-					    <div class="controls">
-					      <input id="teacherpassword" type="password" placeholder="Teacher's password">
-					    </div>
-					  </div>
-					  <div class="control-group">
-					    <label class="control-label" for="inputPassword">New Student Password</label>
-					    <div class="controls">
-					      <input id="newpassword" type="text" placeholder="New password">
-					      <button id="genbutton" class="btn btn-info"><i class="icon-pencil icon-white"></i> Random</button>
-					    </div>
-					  </div>
-				   </form>
+						<div class="control-group">
+							<label class="control-label" for="inputEmail">Teacher's password</label>
+							<div class="controls">
+								<input id="teacherpassword" type="password" placeholder="Teacher's password">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="inputPassword">New Student Password</label>
+							<div class="controls">
+								<input id="newpassword" type="text" placeholder="New password">
+								<button id="genbutton" class="btn btn-info"><i class="icon-pencil icon-white"></i> Random</button>
+							</div>
+						</div>
+					</form>
 				</div>
 				<div class="modal-footer">
 					<a href="#" class="btn btn-primary">Save</a>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </body>
