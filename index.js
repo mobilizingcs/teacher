@@ -11,6 +11,7 @@ $(function(){
 	//will be set automatically from login
 	var teachername;
 	var teacherorg;
+	var user_campaigns;
 
 	//downloads a campaign.xml file
 	function campaignxml(campaign, handler){
@@ -31,6 +32,7 @@ $(function(){
 		$("#classtable tbody").empty();
 		oh.user.info(function(res){
 			var userdata = res.data[first(res.data)];
+			user_campaigns = Object.keys(userdata.campaigns);
 			oh.class.read(Object.keys(userdata.classes).toString(), function(classdata){
 				$.each(userdata.classes, function(key, value){
 					if(key.substr(0,15) == "urn:class:lausd" && classdata[key].role == "privileged"){
@@ -58,15 +60,22 @@ $(function(){
 	}
 
 	function testallempty(class_urn, cb){
+
 		var subject = class_urn.replace("urn:class:lausd:", "").split(":")[4];
 		var campaigns = subjectcampaigns[subject];
 		var counts = {};
 		var requests = $.map(campaigns, function(campaign, i){
-			var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + campaign;
-			var req = oh.survey.responsecount(campaign_urn, function(n){
-				counts[campaign] = n;
-			})
-			return req;
+			var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + campaign.toLowerCase();
+
+			//workaround for missing campaigns
+			if(user_campaigns.indexOf(campaign_urn) < 0){
+				console.log("Campaign " + campaign_urn + " does not exist or was just created. Not checking responses.")
+				return oh.user.whoami();
+			} else {
+				return oh.survey.responsecount(campaign_urn, function(n){
+					counts[campaign] = n;
+				});
+			}
 		});
 
 		//triggered after all counts are in
