@@ -1,0 +1,67 @@
+<campaign>
+	<surveys>
+		<survey>
+			<id>TrashWarmUp</id>
+			<title>Trash Warm-Up</title>
+			<description>A simple campaign about the trash you create.</description>
+			<introText>Please enter data every time you throw something away.</introText>
+			<submitText>Thank you!</submitText>
+			<anytime>true</anytime>
+			<contentList>
+				<prompt>
+					<id>what</id>
+					<displayLabel>what</displayLabel>
+					<promptText>What are you throwing away?</promptText>
+					<promptType>text</promptType>
+					<skippable>false</skippable>
+					<properties>
+						<property>
+							<key>min</key>
+							<label>0</label>
+						</property>
+						<property>
+							<key>max</key>
+							<label>140</label>
+						</property>
+					</properties>
+				</prompt>
+				<prompt>
+					<id>when</id>
+					<displayLabel>when</displayLabel>
+					<promptText>When did you throw your trash away?</promptText>
+					<promptType>single_choice</promptType>
+					<skippable>false</skippable>
+					<properties>
+						<property>
+							<key>0</key>
+							<label>Morning</label>
+						</property>
+						<property>
+							<key>1</key>
+							<label>Afternoon</label>
+						</property>
+						<property>
+							<key>2</key>
+							<label>Night</label>
+						</property>
+					</properties>
+				</prompt>
+				<prompt>
+					<id>photo</id>
+					<displayLabel>photo</displayLabel>
+					<promptText>Please take a photo of your trash.</promptText>
+					<promptType>photo</promptType>
+					<skippable>true</skippable>
+					<skipLabel>Skip</skipLabel>
+					<properties>
+						<property>
+							<key>maxDimension</key>
+							<label>800</label>
+						</property>
+					</properties>
+				</prompt>
+			</contentList>
+		</survey>
+	</surveys>
+	<campaignName>Trash Warm-up</campaignName>
+</campaign>

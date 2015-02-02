@@ -1,0 +1,214 @@
+<campaign>
+    <surveys>
+        <survey>
+            <id>DiningOut</id>
+            <title>Dining Out</title>
+            <submitText>Thanks!</submitText>
+            <anytime>true</anytime>
+            <contentList>
+                <prompt>
+                    <id>restaurant_name</id>
+                    <displayLabel>restaurant name</displayLabel>
+                    <promptText>What is the name of the restaurant?</promptText>
+                    <promptType>text</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>min</key>
+                            <label>1</label>
+                        </property>
+                        <property>
+                            <key>max</key>
+                            <label>256</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>type</id>
+                    <displayLabel>type</displayLabel>
+                    <promptText>What type of restaurant is this?</promptText>
+                    <promptType>single_choice</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>0</key>
+                            <label>Fast Food</label>
+                        </property>
+                        <property>
+                            <key>1</key>
+                            <label>Dine In</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>style</id>
+                    <displayLabel>style</displayLabel>
+                    <promptText>What style of food? For example: Chinese? American?</promptText>
+                    <promptType>text</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>min</key>
+                            <label>1</label>
+                        </property>
+                        <property>
+                            <key>max</key>
+                            <label>256</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>time_day</id>
+                    <displayLabel>time_day</displayLabel>
+                    <promptText>What is the time of day?</promptText>
+                    <promptType>single_choice</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>0</key>
+                            <label>morning</label>
+                        </property>
+                        <property>
+                            <key>1</key>
+                            <label>afternoon</label>
+                        </property>
+                        <property>
+                            <key>2</key>
+                            <label>night</label>
+                        </property>
+                        <property>
+                            <key>3</key>
+                            <label>late night</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>number_people</id>
+                    <displayLabel>number of people</displayLabel>
+                    <promptText>Number of people? (Count the number of people standing in line for food or waiting to be seated. Maximum: 200.)</promptText>
+                    <promptType>number</promptType>
+                    <default>0</default>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>min</key>
+                            <label>0</label>
+                        </property>
+                        <property>
+                            <key>max</key>
+                            <label>200</label>
+                        </property>
+                        <property>
+                            <key>wholeNumber</key>
+                            <label>true</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>heath_rating</id>
+                    <displayLabel>health rating</displayLabel>
+                    <promptText>Health department rating?</promptText>
+                    <promptType>single_choice</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>0</key>
+                            <label>A</label>
+                        </property>
+                        <property>
+                            <key>1</key>
+                            <label>B</label>
+                        </property>
+                        <property>
+                            <key>2</key>
+                            <label>C</label>
+                        </property>
+                        <property>
+                            <key>3</key>
+                            <label>D</label>
+                        </property>
+                        <property>
+                            <key>4</key>
+                            <label>Not visible</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>cost</id>
+                    <displayLabel>cost</displayLabel>
+                    <promptText>What is the cost of the most expensive item (maximum: $100)?</promptText>
+                    <promptType>number</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>min</key>
+                            <label>0</label>
+                        </property>
+                        <property>
+                            <key>max</key>
+                            <label>100</label>
+                        </property>
+                        <property>
+                            <key>wholeNumber</key>
+                            <label>false</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>description_item</id>
+                    <displayLabel>description item</displayLabel>
+                    <promptText>Describe the most expensive item.</promptText>
+                    <promptType>text</promptType>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>min</key>
+                            <label>1</label>
+                        </property>
+                        <property>
+                            <key>max</key>
+                            <label>256</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>noise</id>
+                    <displayLabel>noise</displayLabel>
+                    <promptText>Noise level (1 is peaceful, 5 is LOUD)</promptText>
+                    <promptType>number</promptType>
+                    <default>3</default>
+                    <skippable>false</skippable>
+                    <properties>
+                        <property>
+                            <key>min</key>
+                            <label>1</label>
+                        </property>
+                        <property>
+                            <key>max</key>
+                            <label>5</label>
+                        </property>
+                        <property>
+                            <key>wholeNumber</key>
+                            <label>true</label>
+                        </property>
+                    </properties>
+                </prompt>
+                <prompt>
+                    <id>image</id>
+                    <displayLabel>image</displayLabel>
+                    <promptText>Please take a picture. No pictures of people!</promptText>
+                    <abbreviatedText>Take a picture? No pictures of people!</abbreviatedText>
+                    <promptType>photo</promptType>
+                    <properties>
+                        <property>
+                            <key>maxDimension</key>
+                            <label>800</label>
+                        </property>
+                    </properties>
+                    <skippable>true</skippable>
+                    <skipLabel>Skip</skipLabel>
+                </prompt>
+            </contentList>
+        </survey>
+    </surveys>
+</campaign>
