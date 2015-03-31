@@ -131,7 +131,7 @@ oh.call = function(path, data, datafun){
 	var data = data ? data : {};
 
 	//default parameter
-	data.client = "dashboard"
+	data.client = "class-setup"
 
 	//add auth_token from cookie
 	if($.cookie('auth_token')){
