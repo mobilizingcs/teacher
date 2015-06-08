@@ -25,18 +25,18 @@
 				<prompt>
 					<id>stresschill</id>
 					<displayLabel>Stress/Chill</displayLabel>
-					<promptText>What is your stress or chill level? (-5 is extremely stressed, 0 is neutral, +5 is extremely content.)</promptText>
+					<promptText>How are you feeling right now? (+2 is very stressed, 0 is neutral, -2 is very chilled.)</promptText>
 					<promptType>number</promptType>
 					<default>0</default>
 					<skippable>false</skippable>
 					<properties>
 						<property>
 							<key>min</key>
-							<label>-5</label>
+							<label>-2</label>
 						</property>
 						<property>
 							<key>max</key>
-							<label>5</label>
+							<label>2</label>
 						</property>
 					</properties>
 				</prompt>

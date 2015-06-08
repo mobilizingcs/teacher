@@ -1,0 +1,309 @@
+<campaign>
+	<surveys>
+		<survey>
+			<!-- survey meta data -->
+			<id>food_habits</id>
+			<title>Food Habits</title>
+			<description>This survey contains questions pertaining to your food habits.</description>
+			<submitText>Thank you for submitting your data!</submitText>
+			<anytime>true</anytime>
+			<summaryText>Food habits survey</summaryText>
+			<contentList>
+				<!-- Q1 name -->
+				<prompt>
+					<id>name</id>
+					<displayType>event</displayType>
+					<displayLabel>Name of snack</displayLabel>
+					<promptText>What is the name of this snack?</promptText>
+					<abbreviatedText>Name of snack?</abbreviatedText>
+					<promptType>text</promptType>
+					<!-- Options to choose from -->
+					<properties>
+						<property>
+							<key>min</key>
+							<label>1</label>
+						</property>
+						<property>
+							<key>max</key>
+							<label>100</label>
+						</property>
+					</properties>
+					<!-- default options -->
+					<skippable>false</skippable>
+					<skipLabel>Skip</skipLabel>
+				</prompt>
+				<!-- Q2 salty_sweet -->
+				<prompt>
+					<id>salty_sweet</id>
+					<displayType>event</displayType>
+					<displayLabel>Salty or sweet?</displayLabel>
+					<promptText>Is your snack salty or sweet?</promptText>
+					<abbreviatedText>Salty or sweet?</abbreviatedText>
+					<promptType>single_choice</promptType>
+					<!-- Options to choose from -->
+					<properties>
+						<property>
+							<key>0</key>
+							<label>Salty</label>
+						</property>
+						<property>
+							<key>1</key>
+							<label>Sweet</label>
+						</property>
+					</properties>
+					<!-- default options -->
+					<skippable>false</skippable>
+					<skipLabel>Skip</skipLabel>
+				</prompt>
+				<!-- Q3 serving_size -->
+				<prompt>
+					<id>serving_size</id>
+					<displayType>measurement</displayType>
+					<displayLabel>Servings eaten?</displayLabel>
+					<promptText>About how many servings did you actually eat?</promptText>
+					<abbreviatedText>How many servings did you eat?</abbreviatedText>
+					<promptType>number</promptType>
+					<!-- Options to choose from -->
+					<properties>
+						<property>
+							<key>min</key>
+							<label>0</label>
+						</property>
+						<property>
+							<key>max</key>
+							<label>20</label>
+						</property>
+						<property>
+                            <key>wholeNumber</key>
+                            <label>false</label>
+                        </property>
+					</properties>
+					<!-- default options -->
+					<skippable>false</skippable>
+					<skipLabel>Skip</skipLabel>
+				</prompt>
+				<!-- Q4 calories -->
+				<prompt>
+					<id>calories</id>
+					<displayType>measurement</displayType>
+					<displayLabel>Calories per Serving</displayLabel>
+					<promptText>How many calories per serving?</promptText>
+					<abbreviatedText>How many calories?</abbreviatedText>
+					<promptType>number</promptType>
+					<properties>
+						<property>
+							<key>min</key>
+							<label>0</label>
+						</property>
+						<property>
+							<key>max</key>
+							<label>2000</label>
+						</property>
+						<property>
+                            <key>wholeNumber</key>
+                            <label>false</label>
+                        </property>
+					</properties>
+					<skippable>false</skippable>
+					<skipLabel>Skip</skipLabel>
+				</prompt>
+				<!-- Q5 total fat -->
+				<prompt>
+					<id>total_fat</id>
+					<displayType>measurement</displayType>
+					<displayLabel>Total fat per Serving</displayLabel>
+					<promptText>How many grams of total fat per serving? </promptText>
+					<abbreviatedText>How much total fat?</abbreviatedText>
+					<promptType>number</promptType>
+					<properties>
+						<property>
+							<key>min</key>
+							<label>0</label>
+						</property>
+						<property>
+							<key>max</key>
+							<label>500</label>
+						</property>
+						<property>
+                            <key>wholeNumber</key>
+                            <label>false</label>
+                        </property>
+					</properties>
+					<skippable>false</skippable>
+					<skipLabel>Skip</skipLabel>
+				</prompt>
+				<!-- Q6 sodium -->
+				<prompt>
+					<id>sodium</id>
+					<displayType>measurement</displayType>
+					<displayLabel>Sodium per Serving</displayLabel>
+					<promptText>How many milligrams of sodium per serving?</promptText>
+					<abbreviatedText>How much sodium?</abbreviatedText>
+					<promptType>number</promptType>
+					<properties>
+						<property>
+							<key>min</key>
+							<label>0</label>
+						</property>
+						<property>
+							<key>max</key>
+							<label>10000</label>
+						</property>
+						<property>
+                            <key>wholeNumber</key>
+                            <label>false</label>
+                        </property>
+					</properties>
+					<skippable>false</skippable>
+					<skipLabel>Skip</skipLabel>
+				</prompt>
+				<!-- Q7 sugar -->
+				<prompt>
+					<id>sugar</id>
+					<displayType>measurement</displayType>
+					<displayLabel>Sugars per Serving</displayLabel>
+					<promptText>How many grams of sugar per serving?</promptText>
+					<abbreviatedText>How much sugar?</abbreviatedText>
+					<promptType>number</promptType>
+					<properties>
+						<property>
+							<key>min</key>
+							<label>0</label>
+						</property>
+						<property>
+							<key>max</key>
+							<label>500</label>
+						</property>
+						<property>
+                            <key>wholeNumber</key>
+                            <label>false</label>
+                        </property>
+					</properties>
+					<skippable>false</skippable>
+					<skipLabel>Skip</skipLabel>
+				</prompt>
+				<!-- Q8 healthy_level -->
+				<prompt>
+					<id>healthy_level</id>
+					<displayType>measurement</displayType>
+					<displayLabel>Healthy level</displayLabel>
+					<promptText>How healthy is the snack (1:Very unhealthy, 5:very healthy)?</promptText>
+					<abbreviatedText>How healthy?</abbreviatedText>
+					<promptType>number</promptType>
+					<properties>
+						<property>
+							<key>min</key>
+							<label>1</label>
+						</property>
+						<property>
+							<key>max</key>
+							<label>5</label>
+						</property>
+						<property>
+                            <key>wholeNumber</key>
+                            <label>true</label>
+                        </property>
+					</properties>
+					<default>3</default>
+					<skippable>false</skippable>
+					<skipLabel>Skip</skipLabel>
+				</prompt>
+				<!-- Q9 why -->
+				<prompt>
+					<id>why</id>
+					<displayType>event</displayType>
+					<displayLabel>Why are you snacking?</displayLabel>
+					<promptText>In one word, describe why you are eating this snack.</promptText>
+					<abbreviatedText>Why are you snacking?</abbreviatedText>
+					<promptType>text</promptType>
+					<!-- Options to choose from -->
+					<properties>
+						<property>
+							<key>min</key>
+							<label>1</label>
+						</property>
+						<property>
+							<key>max</key>
+							<label>30</label>
+						</property>
+					</properties>
+					<!-- default options -->
+					<skippable>false</skippable>
+					<skipLabel>Skip</skipLabel>
+				</prompt>
+				<!-- Q10 cost -->
+				<prompt>
+					<id>cost</id>
+					<displayType>measurement</displayType>
+					<displayLabel>Cost of snack?</displayLabel>
+					<promptText>How much does this snack cost (in dollars)?</promptText>
+					<abbreviatedText>Cost of snack?</abbreviatedText>
+					<promptType>number</promptType>
+					<!-- Options to choose from -->
+					<properties>
+						<property>
+							<key>min</key>
+							<label>0</label>
+						</property>
+						<property>
+							<key>max</key>
+							<label>20</label>
+						</property>
+						<property>
+                            <key>wholeNumber</key>
+                            <label>false</label>
+                        </property>
+					</properties>
+					<!-- default options -->
+					<skippable>false</skippable>
+					<skipLabel>Skip</skipLabel>
+				</prompt>
+				<!-- Q11 ingredients -->
+				<prompt>
+					<id>ingredients</id>
+					<displayType>event</displayType>
+					<displayLabel>Ingredients</displayLabel>
+					<promptText>How many ingredients are in your snack?</promptText>
+					<abbreviatedText>Number of ingredients?</abbreviatedText>
+					<promptType>number</promptType>
+					<!-- Options to choose from -->
+					<properties>
+						<property>
+							<key>min</key>
+							<label>0</label>
+						</property>
+						<property>
+							<key>max</key>
+							<label>40</label>
+						</property>
+						<property>
+                            <key>wholeNumber</key>
+                            <label>true</label>
+                        </property>
+					</properties>
+					<!-- default options -->
+					<skippable>false</skippable>
+					<skipLabel>Skip</skipLabel>
+				</prompt>
+				<!-- Q12 snack_image -->
+				<prompt>
+					<id>snack_image</id>
+					<displayType>metadata</displayType>
+					<displayLabel>Snack image</displayLabel>
+					<unit>Unit</unit>
+					<promptText>Take a picture?</promptText>
+					<abbreviatedText>Snack image</abbreviatedText>
+					<promptType>photo</promptType>
+					<properties>
+						<property>
+							<key>res</key>
+							<label>720</label>
+						</property>
+					</properties>
+					<skippable>true</skippable>
+					<skipLabel>Skip</skipLabel>
+				</prompt>
+			</contentList>
+		</survey>
+	</surveys>
+</campaign>
