@@ -35,7 +35,7 @@
             </property>
             <property>
               <key>max</key>
-              <label>5</label>
+              <label>10</label>
             </property>
           </properties>
           <!-- default option -->
