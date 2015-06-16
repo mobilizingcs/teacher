@@ -110,7 +110,6 @@
               </property>
             </properties>
           <!-- default option -->
-          <default>0</default>
           <skippable>false</skippable>
           <skipLabel>Skip</skipLabel>
         </prompt>
