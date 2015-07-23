@@ -25,7 +25,7 @@
 				<prompt>
 					<id>stress</id>
 					<displayLabel>Stress</displayLabel>
-					<promptText>How stressed are you feeling right now (4 is very stressed, 0 not stressed at all)?</promptText>
+					<promptText>How stressed are you feeling right now (3 is very stressed, 0 not stressed at all)?</promptText>
 					<promptType>number</promptType>
 					<skippable>false</skippable>
 					<properties>
@@ -35,7 +35,7 @@
 						</property>
 						<property>
 							<key>max</key>
-							<label>4</label>
+							<label>3</label>
 						</property>
 					</properties>
 				</prompt>
@@ -126,7 +126,7 @@
 						</property>
 						<property>
 							<key>5</key>
-							<label>friends</label>
+							<label>friend's house</label>
 						</property>
 					</properties>
 				</prompt>
