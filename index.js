@@ -133,6 +133,7 @@ $(function(){
 				});
 				$('#myModal').modal('hide');
 				table.row.add(makerow(class_urn, class_name).addClass("success")).draw();
+				message("Created new class: " + class_urn, "success")
 			});
 		});
 	});
