@@ -12,6 +12,7 @@ $(function(){
 	var teachername;
 	var teacherorg;
 	var user_campaigns;
+	var table;
 
 	//downloads a campaign.xml file
 	function campaignxml(campaign, handler){
@@ -22,12 +23,12 @@ $(function(){
 			success: handler,
 			dataType: "text"
 		}).fail(function() {
-			alert("Failed to download:" + filename);
+			message("Failed to download:" + filename);
 		});
 	}
 
 	//repopulates GUI
-	function populateclasses(class_urn){
+	function populateclasses(){
 		$("#inputClass").empty();
 		$("#classtable tbody").empty();
 		oh.user.info(function(res){
@@ -36,33 +37,22 @@ $(function(){
 			oh.class.read(Object.keys(userdata.classes).toString(), function(classdata){
 				$.each(userdata.classes, function(key, value){
 					if(key.substr(0,15) == "urn:class:lausd" && classdata[key].role == "privileged"){
-						$("#inputClass").append($("<option/>", {value: key, text:value}));
-						var mytr = $("<tr />").appendTo("#classtable tbody");
-						td(value).appendTo(mytr);
-						td(key).appendTo(mytr);
-
-						var mybtn = $('<a class="btn btn-primary"><i class="icon-exclamation-sign icon-white"></i> Select</a>')
-						.attr("href", "editclass.html?class=" + key)
-
-						if(key == class_urn){
-							mytr.addClass("success")
-						}
-
-						$("<td>").append(mybtn).appendTo(mytr);
+						makerow(key, value).appendTo("#classtable tbody");			
 					}
 				});
+				initTable();
 			});
 		});
-
-		function first(obj) {
-		    for (var a in obj) return a;
-		}
 	}
 
 	function testallempty(class_urn, cb){
-
 		var subject = class_urn.replace("urn:class:lausd:", "").split(":")[4];
 		var campaigns = subjectcampaigns[subject];
+		if(!campaigns){
+			message("Invalid URN subject format: " + subject)
+			return;
+		}
+
 		var counts = {};
 		var requests = $.map(campaigns, function(campaign, i){
 			var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + campaign.toLowerCase();
@@ -94,7 +84,7 @@ $(function(){
 	$("#createbutton").on("click", function createclass(e){
 		e.preventDefault();
 		if(teacherorg == "Empty" || teachername == "Empty"){
-			alert("Unable to create class. Your account does not have a valid name and organization.");
+			message("Unable to create class. Your account does not have a valid name and organization.");
 			return;
 		}
 		var school = teacherorg;
@@ -108,7 +98,7 @@ $(function(){
 
 		//test if valid subject
 		if(!campaigns){
-			alert("No campaigns found for subject:", subject);
+			message("No campaigns found for subject:", subject);
 			return;
 		}
 
@@ -122,9 +112,8 @@ $(function(){
 		});
 
 	    // all requests finished successfully
-		$.when.apply($, requests).done(function() {
+		$.when.apply($, requests).done(function(){
 			oh.class.create(class_urn, class_name, function(){
-				populateclasses(class_urn);
 				$.each(campaigns, function(index, value) {
 					var mycampaign = value;
 					var myxml = xmlstrings[mycampaign];
@@ -134,28 +123,21 @@ $(function(){
 					if(user_campaigns.indexOf(campaign_urn) < 0){
 						//campaign does not exist
 						oh.campaign.create(myxml, campaign_urn, campaign_name, class_urn, function(){
-							console.log("Campaign created: " + campaign_urn);
+							console.log("Campaign created: " + campaign_urn, "success");
 						});
 					} else {
 						oh.campaign.addclass(campaign_urn, class_urn, function(){
-							console.log("Campaign already exists. Adding class " + class_urn + " to campaign " + campaign_urn);
+							message("Campaign already exists. Adding class " + class_urn + " to campaign " + campaign_urn, "warning");
 						});
 					}
 				});
+				$('#myModal').modal('hide');
+				table.row.add(makerow(class_urn, class_name).addClass("success")).draw();
 			});
 		});
 	});
 
-	$("#deletebutton").on("click", function deleteclass(e){
-		e.preventDefault();
-
-		var class_urn = $("#inputClass option:selected").val();
-		var class_name = $("#inputClass option:selected").text();
-		if(!class_urn) {
-			alert("No class selected to delete.");
-			return
-		}
-
+	function deleteClass(class_urn, class_name, tr){
 		//confirm
 		if(!confirm("Are you sure you want to delete class: " + class_name + "?\n\nThis can not be undone!")){
 			return
@@ -166,7 +148,7 @@ $(function(){
 
 			//delete class
 			oh.class.delete(class_urn, function(){
-				populateclasses();
+				tr.hide("slow");
 			});
 
 			//try to delete corresponding campaigns
@@ -180,11 +162,11 @@ $(function(){
 			$.each(campaigns, function(index, mycampaign) {
 				var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + mycampaign;
 				oh.campaign.delete(campaign_urn, function(){
-					console.log("Campaign deleted: " + campaign_urn)
+					message("Campaign deleted: " + campaign_urn, "success")
 				});
 			});
 		});
-	});
+	}
 
 	function td(x){
 		return($("<td>").text(x).attr("data-value", x || 0));
@@ -192,6 +174,45 @@ $(function(){
 
 	function toTitleCase(str) {
 	    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+	}
+
+	function first(obj) {
+	    for (var a in obj) return a;
+	}	
+
+	function makerow(key, value){
+		var mytr = $("<tr />")
+		td(value).appendTo(mytr);
+		td(key).appendTo(mytr);
+
+		var mybtn = $('<a class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>')
+		.attr("href", "editclass.html?class=" + key).appendTo($("<td>").appendTo(mytr));
+
+		var delbtn = $('<button class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>').click(function(e){
+			e.preventDefault();
+			deleteClass(key, value, mytr)
+		}).appendTo($("<td>").appendTo(mytr));
+		return mytr;
+	}
+
+	//data tables widget
+	function initTable(){
+		table = $('#classtable').DataTable( {
+			"dom" : '<"pull-right"l><"pull-left"f>tip',
+			"lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
+			"aoColumnDefs": [
+				{ 'bSortable': false, 'aTargets': [ 2, 3 ] }
+			]
+		});
+	}
+
+	function message(msg, type){
+		// type must be one of success, info, warning, danger
+		type = type || "danger"
+		$("#errordiv").append('<div class="alert alert-' + type + '"><a href="#" class="close" data-dismiss="alert">&times;</a>' + msg + '</div>');
+		$('html, body').animate({
+			scrollTop: 100
+		}, 200);
 	}
 
 	//init page
@@ -203,10 +224,10 @@ $(function(){
 				var thisorg = data[x] && data[x].organization;
 
 				if(!thisname){
-					alert("ERROR: this account has no last name set. Contact mobilize-support@cs.ucla.edu for assistance.")
+					message("ERROR: this account has no last name set. Contact mobilize-support@cs.ucla.edu for assistance.")
 				}
 				if(!thisorg){
-					alert("ERROR: this account has no organization set. Contact mobilize-support@cs.ucla.edu for assistance.")
+					message("ERROR: this account has no organization set. Contact mobilize-support@cs.ucla.edu for assistance.")
 				}
 
 				teachername = utf2ascii(thisname || "Empty" );
@@ -215,13 +236,6 @@ $(function(){
 				oh.keepalive();
 				populateclasses();
 			});
-		});
-	});
-
-	$("#signoutbutton").on("click", function(e){
-		e.preventDefault();
-		oh.logout(function(){
-			location.reload(true);
 		});
 	});
 });

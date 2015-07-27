@@ -191,7 +191,7 @@ oh.logout = function(cb){
 }
 
 oh.sendtologin = function(){
-	window.location = "../web/#login"
+	window.location = "/#login"
 }
 
 oh.campaign_read = function(cb){
