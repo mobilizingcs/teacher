@@ -37,7 +37,8 @@ $(function(){
 			oh.class.read(Object.keys(userdata.classes).toString(), function(classdata){
 				$.each(userdata.classes, function(key, value){
 					if(key.substr(0,15) == "urn:class:lausd" && classdata[key].role == "privileged"){
-						makerow(key, value).appendTo("#classtable tbody");			
+						var count = Object.keys(classdata[key].users).length;
+						makerow(key, value, count).appendTo("#classtable tbody");			
 					}
 				});
 				initTable();
@@ -132,7 +133,7 @@ $(function(){
 					}
 				});
 				$('#myModal').modal('hide');
-				table.row.add(makerow(class_urn, class_name).addClass("success")).draw();
+				table.row.add(makerow(class_urn, class_name, 0).addClass("success")).draw();
 				message("Created new class: " + class_urn, "success")
 			});
 		});
@@ -181,10 +182,11 @@ $(function(){
 	    for (var a in obj) return a;
 	}	
 
-	function makerow(key, value){
+	function makerow(key, value, count){
 		var mytr = $("<tr />")
 		td(value).appendTo(mytr);
 		td(key).appendTo(mytr);
+		td(count).appendTo(mytr);
 
 		var mybtn = $('<a class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>')
 		.attr("href", "editclass.html?class=" + key).appendTo($("<td>").appendTo(mytr));
@@ -202,7 +204,7 @@ $(function(){
 			"dom" : '<"pull-right"l><"pull-left"f>tip',
 			"lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
 			"aoColumnDefs": [
-				{ 'bSortable': false, 'aTargets': [ 2, 3 ] }
+				{ 'bSortable': false, 'aTargets': [ 3, 4 ] }
 			]
 		});
 	}

@@ -92,8 +92,7 @@ $(function(){
 				"Student ID" : val["Student ID"],
 				"Student Name" : val["Student Name"],
 				"username" : val["username"],
-				"password" : val["password"],
-
+				"password" : val["password"]
 			}
 		});
 
@@ -264,7 +263,7 @@ $(function(){
 	}
 
 	//init page
-	class_urn= getParameterByName("class");
+	class_urn = getParameterByName("class");
 	if(!class_urn){
 		window.location = "index.html"
 	} else {
