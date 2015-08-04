@@ -95,6 +95,10 @@
 							<key>7</key>
 							<label>strangers</label>
 						</property>
+						<property>
+							<key>8</key>
+							<label>coworkers</label>
+						</property>
 					</properties>
 				</prompt>
 				<prompt>
