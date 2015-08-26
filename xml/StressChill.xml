@@ -23,20 +23,19 @@
 					</properties>
 				</prompt>
 				<prompt>
-					<id>stresschill</id>
-					<displayLabel>Stress/Chill</displayLabel>
-					<promptText>How are you feeling right now? (+2 is very stressed, 0 is neutral, -2 is very chilled.)</promptText>
+					<id>stress</id>
+					<displayLabel>Stress</displayLabel>
+					<promptText>How stressed are you feeling right now (3 is very stressed, 0 not stressed at all)?</promptText>
 					<promptType>number</promptType>
-					<default>0</default>
 					<skippable>false</skippable>
 					<properties>
 						<property>
 							<key>min</key>
-							<label>-2</label>
+							<label>0</label>
 						</property>
 						<property>
 							<key>max</key>
-							<label>2</label>
+							<label>3</label>
 						</property>
 					</properties>
 				</prompt>
@@ -96,29 +95,49 @@
 							<key>7</key>
 							<label>strangers</label>
 						</property>
+						<property>
+							<key>8</key>
+							<label>coworkers</label>
+						</property>
 					</properties>
 				</prompt>
 				<prompt>
-					<id>indoors</id>
-					<displayLabel>Indoors</displayLabel>
-					<promptText>Are you indoors or outdoors?</promptText>
+					<id>where</id>
+					<displayLabel>Where</displayLabel>
+					<promptText>Where are you?</promptText>
 					<promptType>single_choice</promptType>
 					<skippable>false</skippable>
 					<properties>
 						<property>
 							<key>0</key>
-							<label>indoors</label>
+							<label>school</label>
 						</property>
 						<property>
 							<key>1</key>
-							<label>outdoors</label>
+							<label>work</label>
+						</property>
+						<property>
+							<key>2</key>
+							<label>home</label>
+						</property>
+						<property>
+							<key>3</key>
+							<label>public place</label>
+						</property>
+						<property>
+							<key>4</key>
+							<label>other's house</label>
+						</property>
+						<property>
+							<key>5</key>
+							<label>commuting</label>
 						</property>
 					</properties>
 				</prompt>
 				<prompt>
 					<id>why</id>
 					<displayLabel>Why</displayLabel>
-					<promptText>Why are you here?</promptText>
+					<promptText>Why are you here (in one word)?</promptText>
 					<promptType>text</promptType>
 					<skippable>false</skippable>
 					<properties>

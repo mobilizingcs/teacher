@@ -24,7 +24,7 @@
             <id>day</id>
             <displayType>measurement</displayType>
             <displayLabel>Day</displayLabel>
-            <promptText>For which day are you collecting data for?</promptText>
+            <promptText>For which day are you collecting data?</promptText>
             <abbreviatedText>Day</abbreviatedText>
             <promptType>number</promptType>
             <!-- options for users to choose from -->
