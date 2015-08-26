@@ -1,0 +1,53 @@
+<campaign>
+	<surveys>
+		<survey>
+			<id>timeexp</id>
+			<title>Time Perception</title>
+			<description>Use this survey to record your time perception data</description>
+			<submitText>Thank you for filling out the survey!</submitText>
+			<anytime>true</anytime>
+			<summaryText>Time Perception Survey</summaryText>
+			<contentList>
+				<prompt>
+					<id>group</id>
+					<displayLabel>Treatment group</displayLabel>
+					<promptText>Which group did you belong to?</promptText>
+					<abbreviatedText>Group</abbreviatedText>
+					<promptType>single_choice</promptType>
+					<properties>
+						<property>
+							<key>0</key>
+							<label>Control</label>
+						</property>
+						<property>
+							<key>1</key>
+							<label>Treatment</label>
+						</property>
+					</properties>
+					<skippable>false</skippable>
+					<skipLabel>Skip</skipLabel>
+				</prompt>
+				<prompt>
+					<id>elapsed_time</id>
+					<displayLabel>Elapsed time</displayLabel>
+					<promptText>How many seconds elapsed until you thought one minute had passed?</promptText>
+					<abbreviatedText>time</abbreviatedText>
+					<promptType>number</promptType>
+					<properties>
+						<property>
+							<key>min</key>
+							<label>0</label>
+						</property>
+						<property>
+							<key>max</key>
+							<label>180</label>
+						</property>
+					</properties>
+					<default>60</default>
+					<skippable>false</skippable>
+					<skipLabel>Skip</skipLabel>
+				</prompt>
+			</contentList>
+		</survey>
+	</surveys>
+</campaign>
