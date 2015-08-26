@@ -253,7 +253,7 @@ $(function(){
 		var count = Object.keys(class_members).filter(function(studentusername){
 			return studentusername.substring(0, 6) == "lausd-";
 		}).length;
-		$("#urntitle").text(class_name + "   (" + count + " members)");
+		$("#urntitle").text(class_name + "   (" + count + " students)");
 		$.each(class_members, function(username, userdata){
 			var isdropped = droppedstudents && (droppedstudents.indexOf(userdata["personal_id"]) > -1);
 			var isadded = addedstudents && (addedstudents.indexOf(userdata["personal_id"]) > -1);
