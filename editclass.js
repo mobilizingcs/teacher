@@ -119,6 +119,7 @@ $(function(){
 	function addrow(userdata, isdropped, isadded){
 		//update Aug 20: only show students
 		if(!userdata.password && userdata["username"] != teacherid){
+			console.log("Skipping non-student user: " + userdata["username"])
 			return;
 		}
 
@@ -249,14 +250,15 @@ $(function(){
 
 	function loadtable(droppedstudents, addedstudents){
 		$("#studentable tbody").empty();
-		var total = 0;
+		var count = Object.keys(class_members).filter(function(studentusername){
+			return studentusername.substring(0, 6) == "lausd-";
+		}).length;
+		$("#urntitle").text(class_name + "   (" + count + " members)");
 		$.each(class_members, function(username, userdata){
 			var isdropped = droppedstudents && (droppedstudents.indexOf(userdata["personal_id"]) > -1);
 			var isadded = addedstudents && (addedstudents.indexOf(userdata["personal_id"]) > -1);
-			addrow(userdata, isdropped, isadded)
-			total++;
+			addrow(userdata, isdropped, isadded);
 		});
-		$("#urntitle").text(class_name + "   (" + total + " members)");
 		if($("#studentable tbody tr.error").length){
 			$("#deletealart").show();
 		}

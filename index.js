@@ -37,7 +37,9 @@ $(function(){
 			oh.class.read(Object.keys(userdata.classes).toString(), function(classdata){
 				$.each(userdata.classes, function(key, value){
 					if(key.substr(0,15) == "urn:class:lausd" && classdata[key].role == "privileged"){
-						var count = Object.keys(classdata[key].users).length;
+						var count = Object.keys(classdata[key].users).filter(function(username){
+							return username.substring(0,6) == "lausd-";
+						}).length;
 						makerow(key, value, count).appendTo("#classtable tbody");			
 					}
 				});
