@@ -126,7 +126,7 @@ $(function(){
 					if(user_campaigns.indexOf(campaign_urn) < 0){
 						//campaign does not exist
 						oh.campaign.create(myxml, campaign_urn, campaign_name, class_urn, function(){
-							console.log("Campaign created: " + campaign_urn, "success");
+							message("Campaign created: " + campaign_urn, "success");
 						});
 					} else {
 						oh.campaign.addclass(campaign_urn, class_urn, function(){
