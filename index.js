@@ -27,13 +27,20 @@ $(function(){
 		});
 	}
 
+	//update user campaign list
+	function updateUserInfo(cb){
+		oh.user.info(function(res){
+			var userdata = res.data[first(res.data)];
+			user_campaigns = Object.keys(userdata.campaigns);
+			if(cb) cb(userdata);
+		});		
+	}
+
 	//repopulates GUI
 	function populateclasses(){
 		$("#inputClass").empty();
 		$("#classtable tbody").empty();
-		oh.user.info(function(res){
-			var userdata = res.data[first(res.data)];
-			user_campaigns = Object.keys(userdata.campaigns);
+		updateUserInfo(function(userdata){
 			oh.class.read(Object.keys(userdata.classes).toString(), function(classdata){
 				$.each(userdata.classes, function(key, value){
 					if(key.substr(0,15) == "urn:class:lausd" && classdata[key].role == "privileged"){
@@ -126,6 +133,7 @@ $(function(){
 					if(user_campaigns.indexOf(campaign_urn) < 0){
 						//campaign does not exist
 						oh.campaign.create(myxml, campaign_urn, campaign_name, class_urn, function(){
+							user_campaigns.push(campaign_urn);
 							message("Campaign created: " + campaign_urn, "success");
 						});
 					} else {
@@ -164,9 +172,13 @@ $(function(){
 
 			//delete some campaigns
 			$.each(campaigns, function(index, mycampaign) {
-				var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + mycampaign;
+				var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + mycampaign.toLowerCase();
 				oh.campaign.delete(campaign_urn, function(){
-					message("Campaign deleted: " + campaign_urn, "success")
+					message("Campaign deleted: " + campaign_urn, "success");
+					var index = user_campaigns.indexOf(campaign_urn);
+					if( index > -1 ) {
+						user_campaigns.splice(index, 1);
+					}
 				});
 			});
 		});
