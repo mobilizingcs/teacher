@@ -102,6 +102,11 @@ $(function(){
 		var period = $("#inputPeriod").val();
 		var subject = $("#inputSubject").val();
 
+		if(!subject){
+			alert("Please select a subject!");
+			return;
+		}
+		
 		var class_urn = ("urn:class:lausd:" + quarter + ":" + school + ":"  + teachername + ":" + subject + ":" + period).toLowerCase();
 		var class_name = toTitleCase(subject) + " " + period + " " + teachername + " " + quarter.replace(":", " ");
 		var campaigns = subjectcampaigns[subject];
