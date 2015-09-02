@@ -149,8 +149,8 @@ $(function(){
 						}));
 					}
 				});
+				$('#myModal').modal('hide');
 				$.when.apply($, requests).done(function(){
-					$('#myModal').modal('hide');
 					table.row.add(makerow(class_urn, class_name, 0).addClass("success")).draw();
 					message("Created new class: <b>" + class_urn + "</b> with campaigns: <b>" + new_campaigns_added.join("</b> and <b>") + "</b>.", "success");
 				});
