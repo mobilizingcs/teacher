@@ -106,7 +106,7 @@ $(function(){
 			alert("Please select a subject!");
 			return;
 		}
-		
+
 		var class_urn = ("urn:class:lausd:" + quarter + ":" + school + ":"  + teachername + ":" + subject + ":" + period).toLowerCase();
 		var class_name = toTitleCase(subject) + " " + period + " " + teachername + " " + quarter.replace(":", " ");
 		var campaigns = subjectcampaigns[subject];
@@ -128,7 +128,9 @@ $(function(){
 
 	    // all requests finished successfully
 		$.when.apply($, requests).done(function(){
+			requests = [];
 			oh.class.create(class_urn, class_name, function(){
+				var new_campaigns_added = [];
 				$.each(campaigns, function(index, value) {
 					var mycampaign = value;
 					var myxml = xmlstrings[mycampaign];
@@ -137,19 +139,21 @@ $(function(){
 
 					if(user_campaigns.indexOf(campaign_urn) < 0){
 						//campaign does not exist
-						oh.campaign.create(myxml, campaign_urn, campaign_name, class_urn, function(){
+						requests.push(oh.campaign.create(myxml, campaign_urn, campaign_name, class_urn, function(){
 							user_campaigns.push(campaign_urn);
-							message("Campaign created: " + campaign_urn, "success");
-						});
+							new_campaigns_added.push(mycampaign);
+						}));
 					} else {
-						oh.campaign.addclass(campaign_urn, class_urn, function(){
+						requests.push(oh.campaign.addclass(campaign_urn, class_urn, function(){
 							message("Campaign already exists. Adding class " + class_urn + " to campaign " + campaign_urn, "warning");
-						});
+						}));
 					}
 				});
-				$('#myModal').modal('hide');
-				table.row.add(makerow(class_urn, class_name, 0).addClass("success")).draw();
-				message("Created new class: " + class_urn, "success")
+				$.when.apply($, requests).done(function(){
+					$('#myModal').modal('hide');
+					table.row.add(makerow(class_urn, class_name, 0).addClass("success")).draw();
+					message("Created new class: <b>" + class_urn + "</b> with campaigns: <b>" + new_campaigns_added.join("</b> and <b>") + "</b>.", "success");
+				});
 			});
 		});
 	});
