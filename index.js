@@ -167,10 +167,13 @@ $(function(){
 		//test for existing responses first
 		testallempty(class_urn, function(){
 
+			//request queue
+			var requests = [];
+
 			//delete class
-			oh.class.delete(class_urn, function(){
+			requests.push(oh.class.delete(class_urn, function(){
 				tr.hide("slow");
-			});
+			}));
 
 			//try to delete corresponding campaigns
 			var subject = class_urn.replace("urn:class:lausd:", "").split(":")[4];
@@ -180,16 +183,21 @@ $(function(){
 			var campaigns = subjectcampaigns[subject];
 
 			//delete some campaigns
+			var deleted_campaigns = [];
 			$.each(campaigns, function(index, mycampaign) {
 				var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + mycampaign.toLowerCase();
-				oh.campaign.delete(campaign_urn, function(){
-					message("Campaign deleted: " + campaign_urn, "success");
+				requests.push(oh.campaign.delete(campaign_urn, function(){
+					deleted_campaigns.push(mycampaign)
 					var index = user_campaigns.indexOf(campaign_urn);
 					if( index > -1 ) {
 						user_campaigns.splice(index, 1);
 					}
-				});
+				}));
 			});
+
+			$.when.apply($, requests).done(function(){
+				message("Deleted class: <b>" + class_urn + "</b> with campaigns: <b>" + deleted_campaigns.join("</b> and <b>") + "</b>.", "success");
+			});			
 		});
 	}
 
