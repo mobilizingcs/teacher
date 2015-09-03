@@ -258,10 +258,10 @@ $(function(){
 				var thisorg = data[x] && data[x].organization;
 
 				if(!thisname){
-					message("ERROR: this account has no last name set. Contact mobilize-support@cs.ucla.edu for assistance.")
+					message("ERROR: this account has no last name set. Contact support@mobilizingcs.org for assistance.")
 				}
 				if(!thisorg){
-					message("ERROR: this account has no organization set. Contact mobilize-support@cs.ucla.edu for assistance.")
+					message("ERROR: this account has no organization set. Contact support@mobilizingcs.org for assistance.")
 				}
 
 				teachername = utf2ascii(thisname || "Empty" );

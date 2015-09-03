@@ -107,7 +107,7 @@ oh.call = function(path, data, datafun){
 		if(path == "/user/change_password" && code == "0203"){
 			return "ERROR: Your password is incorrect.";
 		} else if(path == "/class/create" && text == "The user does not have permission to create new classes."){
-			return "ERROR: Could not create this class. It appears you do not have the class creation privilege. Contact mobilize-support@cs.ucla.edu for assistance.";
+			return "ERROR: Could not create this class. It appears you do not have the class creation privilege. Contact support@mobilizingcs.org for assistance.";
 		}
 		//default message
 		return "Fail: " + path + ": " + code + ".\n" + text;
