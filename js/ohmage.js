@@ -387,6 +387,16 @@ oh.survey.responsecount = function(urn, cb){
 	});
 }
 
+oh.survey.upload = function(urn, creation_timestamp, json, cb){
+	return oh.call("/survey/upload", {
+		campaign_urn : urn,	
+		campaign_creation_timestamp : creation_timestamp,
+		surveys : json		
+	}, function(res){
+		cb && cb(res);
+	});	
+}
+
 //no more than 1 ping every 60 sec
 oh.ping = _.debounce(oh.user.whoami, 60*1000, true);
 

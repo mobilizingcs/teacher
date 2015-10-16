@@ -11,6 +11,7 @@ $(function(){
 	//will be set automatically from login
 	var teachername;
 	var teacherorg;
+	var teacherprivs;
 	var user_campaigns;
 	var table;
 
@@ -93,6 +94,12 @@ $(function(){
 
 	$("#createbutton").on("click", function createclass(e){
 		e.preventDefault();
+
+		if(!teacherprivs){
+			alert("Please accept our usage policy before attempting creating classes. You will now be redirected.");
+			window.location.href = 'policy.html';
+		}
+
 		if(teacherorg == "Empty" || teachername == "Empty"){
 			message("Unable to create class. Your account does not have a valid name and organization.");
 			return;
@@ -256,6 +263,7 @@ $(function(){
 
 				var thisname = data[x] && data[x].last_name;
 				var thisorg = data[x] && data[x].organization;
+				teacherprivs = data[x].permissions.can_setup_users && data[x].permissions.can_create_classes
 
 				if(!thisname){
 					message("ERROR: this account has no last name set. Contact support@mobilizingcs.org for assistance.")
