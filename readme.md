@@ -42,7 +42,8 @@ New students are added by uploading a CSV file that following internal LAUSD con
 This means that the CSV file is formatted according to standard csv, and the first line contains column headers.
 The columns `Student ID` and `Student Name` must be present and the latter is a single quoted string formatted as `Lastname, Firstname`.
 
-
+## Licensing
+The code in this respository is open-source and licensed under the Apache License, version 2.0. The full text of the license may be found at this link: http://www.apache.org/licenses/LICENSE-2.0.
 
 
  
