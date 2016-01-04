@@ -8,6 +8,12 @@ $(function(){
 	    "ids" : ["FoodHabits", "PersonalityColor", "StressChill", "TimeUse", "TimePerception"]
 	};
 
+	$("#inputSubject").change(function(){
+		var val = $(this).val();
+		var campaigns = subjectcampaigns[val];
+		$("#subjectCampaignList").html("<b>Campaigns for " + val + ": </b>" + campaigns.join(", "));
+	});
+
 	//will be set automatically from login
 	var teachername;
 	var teacherorg;
