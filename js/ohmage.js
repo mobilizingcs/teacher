@@ -205,6 +205,15 @@ oh.campaign_read = function(cb){
 	return req;
 };
 
+oh.campaign.readclass = function(class_urn, cb){
+	return oh.call("/campaign/read", {
+		class_urn_list : class_urn,
+		output_format : "short"
+	}, function(res){
+		cb(res.metadata.items)
+	});	
+}
+
 oh.user.whoami = function(cb){
 	var req = oh.call("/user/whoami", {}, function(res){
 		if(!cb) return;

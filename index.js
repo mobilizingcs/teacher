@@ -210,6 +210,11 @@ $(function(){
 
 			$.when.apply($, requests).done(function(){
 				message("Deleted class: <b>" + class_urn + "</b> with campaigns: <b>" + deleted_campaigns.join("</b> and <b>") + "</b>.", "success");
+				oh.campaign.readclass(class_urn, function(leftover_campaigns){
+					if(leftover_campaigns.length){
+						message("The following manually created campaigns were not automatically deleted. You need to delete them manually: " + leftover_campaigns.join("</b> and <b>", "warning"));
+					}
+				});
 			});			
 		});
 	}
