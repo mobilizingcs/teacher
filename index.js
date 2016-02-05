@@ -183,39 +183,53 @@ $(function(){
 			//request queue
 			var requests = [];
 
-			//delete class
-			requests.push(oh.class.delete(class_urn, function(){
-				tr.hide("slow");
-			}));
-
 			//try to delete corresponding campaigns
 			var subject = class_urn.replace("urn:class:lausd:", "").split(":")[4];
 			console.log("Deleting campaigns for subject: " + subject);
 
 			//lookup campaigns
 			var campaigns = subjectcampaigns[subject];
+			var campaign_urns = $.map(campaigns, function(val){return class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + val.toLowerCase();});
+			var leftover_campaigns = [];
+
+			//check which campaigns we have
+			oh.campaign.readclass(class_urn, function(class_campaigns){
+				//find leftover campaigns before deleting class
+				console.log("Deleting campaigns: " + campaign_urns.join(", "))
+				$.each(class_campaigns, function( index, campaign_urn ) {
+					if(campaign_urns.indexOf(campaign_urn) < 0) {
+						console.log("Found leftover campaign! " + campaign_urn)
+						leftover_campaigns.push(campaign_urn);
+					} else {
+						console.log("Campaign " + campaign_urn + " set to be deleted.")
+					}
+				});
+
+				if(leftover_campaigns.length){
+					message("The following manually added campaigns will not be deleted automatically: " + leftover_campaigns.join("</b> and <b>"), "warning");
+				}
+
+				//delete class
+				requests.push(oh.class.delete(class_urn, function(){
+					tr.hide("slow");
+				}));
+			});		
 
 			//delete some campaigns
 			var deleted_campaigns = [];
 			$.each(campaigns, function(index, mycampaign) {
 				var campaign_urn = class_urn.replace("urn:class:lausd", "urn:campaign:lausd") + ":" + mycampaign.toLowerCase();
+				if(user_campaigns.indexOf(campaign_urn) < 0) return;
 				requests.push(oh.campaign.delete(campaign_urn, function(){
 					deleted_campaigns.push(mycampaign)
 					var index = user_campaigns.indexOf(campaign_urn);
-					if( index > -1 ) {
-						user_campaigns.splice(index, 1);
-					}
+					if( index > -1 ) user_campaigns.splice(index, 1);
 				}));
 			});
 
 			$.when.apply($, requests).done(function(){
 				message("Deleted class: <b>" + class_urn + "</b> with campaigns: <b>" + deleted_campaigns.join("</b> and <b>") + "</b>.", "success");
-				oh.campaign.readclass(class_urn, function(leftover_campaigns){
-					if(leftover_campaigns.length){
-						message("The following manually created campaigns were not automatically deleted. You need to delete them manually: " + leftover_campaigns.join("</b> and <b>", "warning"));
-					}
-				});
-			});			
+			});
 		});
 	}
 
